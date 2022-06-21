@@ -2,7 +2,8 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import renderWithRouter from '../helpers/renderWithRouter';
+// import renderWithRouter from '../helpers/renderWithRouter';
+import renderWithRouterAndRedux from '../helpers/renderWithRouterAndRedux';
 
 describe('Testes da página de Login', () => {
   const emailTestId = 'email-input';
@@ -10,7 +11,7 @@ describe('Testes da página de Login', () => {
   const buttonTestId = 'login-submit-btn';
 
   it('Testa se há 2 inputs na tela (email e senha)', () => {
-    renderWithRouter(<App />);
+    renderWithRouterAndRedux(<App />);
     const emailInput = screen.getByTestId(emailTestId);
     const passwordInput = screen.getByTestId(passwordTestId);
 
@@ -19,7 +20,7 @@ describe('Testes da página de Login', () => {
 
   it('Testa se é possível digitar nos inputs e testa o funcionamento do botão de logar',
     () => {
-      renderWithRouter(<App />);
+      renderWithRouterAndRedux(<App />);
       const emailInput = screen.getByTestId(emailTestId);
       const passwordInput = screen.getByTestId(passwordTestId);
       const button = screen.getByTestId('login-submit-btn');
@@ -43,7 +44,7 @@ describe('Testes da página de Login', () => {
     });
 
   it('Testa se o localStorage é setado quando logar', () => {
-    renderWithRouter(<App />);
+    renderWithRouterAndRedux(<App />);
     const email = 'teste@teste.com';
 
     const emailInput = screen.getByTestId(emailTestId);
