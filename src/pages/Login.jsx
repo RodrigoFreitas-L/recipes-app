@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [enterBtn, setEnterBtn] = useState(true);
+  const history = useHistory();
 
   useEffect(() => {
     const isDisabled = () => {
@@ -17,6 +19,13 @@ function Login() {
     };
     isDisabled();
   }, [email, password]);
+
+  const handleTokenSubmit = () => {
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', JSON.stringify({ email }));
+    history.push('/foods');
+  };
 
   return (
     <>
@@ -35,6 +44,7 @@ function Login() {
       <button
         data-testid="login-submit-btn"
         type="button"
+        onClick={ () => handleTokenSubmit() }
         disabled={ enterBtn }
       >
         Enter
