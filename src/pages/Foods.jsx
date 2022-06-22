@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import CardFood from '../components/CardFood';
 import Header from '../components/Header';
 import { setFoods } from '../redux/reducers/foodsSlice';
 
@@ -19,23 +20,10 @@ function Foods() {
     }
   }, [dispatch, foods, history]);
 
-  const renderFoods = () => {
-    if (foods !== null) {
-      if (foods.length > 0) {
-        const listFoods = foods.map((meal) => (
-          <div key={ meal.idMeal }>
-            <h1>{ meal.strMeal }</h1>
-          </div>
-        ));
-        return listFoods;
-      } return false;
-    }
-  };
-
   return (
     <>
       <Header title="Foods" />
-      { renderFoods() }
+      <CardFood />
     </>
   );
 }
