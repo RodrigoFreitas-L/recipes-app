@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   foods: [],
-  filter: '',
 };
 
 const foodsSlice = createSlice({
@@ -12,11 +11,8 @@ const foodsSlice = createSlice({
     setFoods(state, actions) {
       state.foods = actions.payload;
     },
-    setFilter(state, actions) {
-      state.filter = actions.payload;
-    },
   },
 });
 
-export const { setFoods, setFilter } = foodsSlice.actions;
+export const { setFoods } = foodsSlice.actions;
 export default foodsSlice.reducer;

@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import searchIcon from '../images/searchIcon.svg';
 import profileIcon from '../images/profileIcon.svg';
 
+// componentes
+import SearchBar from './SearchBar';
+
 function Header({ title }) {
   const [searchBar, setSearchBar] = useState(false);
   const history = useHistory();
@@ -32,10 +35,7 @@ function Header({ title }) {
           </button>
         )}
 
-      {searchBar && <input
-        type="text"
-        data-testid="search-input"
-      />}
+      {searchBar && <SearchBar />}
 
     </>
   );
