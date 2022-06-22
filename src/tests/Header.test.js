@@ -141,6 +141,7 @@ describe('10 - O header aparece nas rotas corretas', () => {
     const profileButton = screen.getByTestId(profileButtonTestId);
     const pageTitle = screen.getByTestId(pageTitleTestId);
     const searchButton = screen.getByTestId(searchButtonTestId);
+    userEvent.click(searchButton);
     expect(profileButton && pageTitle && searchButton).toBeInTheDocument();
   });
 
