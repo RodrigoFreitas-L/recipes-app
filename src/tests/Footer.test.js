@@ -87,28 +87,28 @@ describe('21 - Testes da página de Bebidas', () => {
   });
   test('Testa se não tem footer na tela de detalhes de uma receita de bebida', () => {
     renderWithRouterAndRedux(<CardDrink />);
-    const footer = screen.getByTestId(footerTestId);
-    const drinkButton = screen.getByTestId(drinkTestId);
-    const exploreButton = screen.getByTestId(exploreTestId);
-    const foodButton = screen.getByTestId(foodTestId);
+    const footer = screen.queryByTestId(footerTestId);
+    const drinkButton = screen.queryByTestId(drinkTestId);
+    const exploreButton = screen.queryByTestId(exploreTestId);
+    const foodButton = screen.queryByTestId(foodTestId);
 
     expect(footer && drinkButton && exploreButton && foodButton).not.toBeInTheDocument();
   });
   test('Testa se não tem footer na tela de uma receita de comida em andamento', () => {
     renderWithRouterAndRedux(<CardFoodInProgress />);
-    const footer = screen.getByTestId(footerTestId);
-    const drinkButton = screen.getByTestId(drinkTestId);
-    const exploreButton = screen.getByTestId(exploreTestId);
-    const foodButton = screen.getByTestId(foodTestId);
+    const footer = screen.queryByTestId(footerTestId);
+    const drinkButton = screen.queryByTestId(drinkTestId);
+    const exploreButton = screen.queryByTestId(exploreTestId);
+    const foodButton = screen.queryByTestId(foodTestId);
 
     expect(footer && drinkButton && exploreButton && foodButton).not.toBeInTheDocument();
   });
   test('Testa se não tem footer na tela de uma receita de bebida em andamento', () => {
     renderWithRouterAndRedux(<CardDrinkInProgress />);
-    const footer = screen.getByTestId(footerTestId);
-    const drinkButton = screen.getByTestId(drinkTestId);
-    const exploreButton = screen.getByTestId(exploreTestId);
-    const foodButton = screen.getByTestId(foodTestId);
+    const footer = screen.queryByTestId(footerTestId);
+    const drinkButton = screen.queryByTestId(drinkTestId);
+    const exploreButton = screen.queryByTestId(exploreTestId);
+    const foodButton = screen.queryByTestId(foodTestId);
 
     expect(footer && drinkButton && exploreButton && foodButton).not.toBeInTheDocument();
   });
@@ -185,20 +185,20 @@ describe('21 - Testes da página de Bebidas', () => {
   test('Testa se não tem footer na tela de receitas feitas', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/done-recipes');
-    const footer = screen.getByTestId(footerTestId);
-    const drinkButton = screen.getByTestId(drinkTestId);
-    const exploreButton = screen.getByTestId(exploreTestId);
-    const foodButton = screen.getByTestId(foodTestId);
+    const footer = screen.queryByTestId(footerTestId);
+    const drinkButton = screen.queryByTestId(drinkTestId);
+    const exploreButton = screen.queryByTestId(exploreTestId);
+    const foodButton = screen.queryByTestId(foodTestId);
 
     expect(footer && drinkButton && exploreButton && foodButton).not.toBeInTheDocument();
   });
   test('Testa se não tem footer na tela de receitas favoritas', () => {
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/favorite-recipes');
-    const footer = screen.getByTestId(footerTestId);
-    const drinkButton = screen.getByTestId(drinkTestId);
-    const exploreButton = screen.getByTestId(exploreTestId);
-    const foodButton = screen.getByTestId(foodTestId);
+    const footer = screen.queryByTestId(footerTestId);
+    const drinkButton = screen.queryByTestId(drinkTestId);
+    const exploreButton = screen.queryByTestId(exploreTestId);
+    const foodButton = screen.queryByTestId(foodTestId);
 
     expect(footer && drinkButton && exploreButton && foodButton).not.toBeInTheDocument();
   });
