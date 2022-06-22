@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import CardDrink from '../components/CardDrink';
 import Header from '../components/Header';
 import { setDrinks } from '../redux/reducers/drinksSlice';
 
@@ -19,24 +20,10 @@ function Drinks() {
     }
   }, [dispatch, drinks, history]);
 
-  const renderDrinks = () => {
-    if (drinks !== null) {
-      if (drinks.length > 0) {
-        const listDrinks = drinks.map((drink) => (
-          <div key={ drink.idDrink }>
-            <h1>{ drink.strDrink }</h1>
-          </div>
-
-        ));
-        return listDrinks;
-      } return false;
-    }
-  };
-
   return (
     <>
       <Header title="Drinks" />
-      { renderDrinks() }
+      <CardDrink />
     </>
   );
 }
