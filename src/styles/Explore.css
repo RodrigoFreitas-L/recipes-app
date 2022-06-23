@@ -1,18 +1,18 @@
 .ExploreCards {
-  position: absolute;
-  top: 20%;
   left: 10%;
   margin: auto;
+  position: absolute;
+  top: 20%;
   width: 40vh;
 }
 
 .ExploreCard {
-  padding: 15px;
   background-color: white;
-  margin: 20px;
-  width: 40vh;
-  text-decoration: none;
   color: black;
+  margin: 20px;
+  padding: 15px;
+  text-decoration: none;
+  width: 40vh;
 }
 
 .ExploreCard a {
