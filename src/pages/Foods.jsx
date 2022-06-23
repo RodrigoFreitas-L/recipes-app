@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 // Componentes
-import BoxFood from '../components/BoxFood';
 import Header from '../components/Header';
+import BoxFood from '../components/BoxFood';
+import Footer from '../components/Footer';
 
 // Actions
 import { setFoods } from '../redux/reducers/foodsSlice';
@@ -28,6 +29,7 @@ function Foods() {
     <>
       <Header title="Foods" />
       <BoxFood />
+      <Footer />
     </>
   );
 }

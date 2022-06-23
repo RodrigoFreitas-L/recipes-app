@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import searchIcon from '../images/searchIcon.svg';
 import profileIcon from '../images/profileIcon.svg';
 import { setSearchBar } from '../redux/reducers/searchBarSlice';
+import '../styles/Header.css';
 
 // componentes
 import SearchBar from './SearchBar';
