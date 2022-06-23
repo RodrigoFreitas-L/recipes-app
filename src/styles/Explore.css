@@ -1,0 +1,21 @@
+.ExploreCards {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  margin: auto;
+  width: 40vh;
+}
+
+.ExploreCard {
+  padding: 15px;
+  background-color: white;
+  margin: 20px;
+  width: 40vh;
+  text-decoration: none;
+  color: black;
+}
+
+.ExploreCard a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
