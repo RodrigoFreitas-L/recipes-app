@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import CardDrink from '../components/CardDrink';
-import Footer from '../components/Footer';
+
+// Componentes
 import Header from '../components/Header';
+import BoxDrink from '../components/BoxDrink';
+import Footer from '../components/Footer';
+
+// Actions
 import { setDrinks } from '../redux/reducers/drinksSlice';
 
 function Drinks() {
@@ -24,7 +28,7 @@ function Drinks() {
   return (
     <>
       <Header title="Drinks" />
-      <CardDrink />
+      <BoxDrink />
       <Footer />
     </>
   );

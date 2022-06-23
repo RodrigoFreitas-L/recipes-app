@@ -1,10 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+
+// Componentes
 import Login from '../pages/Login';
 import Foods from '../pages/Foods';
 import Drinks from '../pages/Drinks';
-import CardFood from '../components/CardFood';
-import CardDrink from '../components/CardDrink';
+import CardFood from '../pages/CardFood';
+import CardDrink from '../pages/CardDrink';
 import CardFoodInProgress from '../components/CardFoodInProgress';
 import CardDrinkInProgress from '../components/CardDrinkInProgress';
 import Explore from '../pages/Explore';
