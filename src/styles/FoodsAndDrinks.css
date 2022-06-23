@@ -3,23 +3,25 @@
   flex-wrap: wrap;
   font-size: 0.5rem;
   margin: 60px auto;
-  overflow: hidden;
   text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   width: 90%;
 }
 
 .meal-or-drink {
-  color: black;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 1px 1px 1px green;
+  color: black;
   margin: 10px auto;
+  padding: 5px 0;
   width: 40%;
 }
 
 .meal-or-drink img {
-  border-radius: 0 0 10px 10px ;
-  width: 100%;
+  border-radius: 10px;
+  margin-top: 5px;
+  width: 80%;
+}
+
+.meal-or-drink:hover {
+  box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.5);
 }
