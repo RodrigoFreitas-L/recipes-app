@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-function CardDrink() {
+function BoxDrink() {
   const { drinks } = useSelector((state) => state.drinks);
   const renderDrinks = () => {
     const MAX_LIST_NUMBER = 12;
@@ -39,8 +39,8 @@ function CardDrink() {
   );
 }
 
-CardDrink.propTypes = {
+BoxDrink.propTypes = {
   drinks: PropTypes.objectOf(PropTypes.shape),
 }.isRequired;
 
-export default CardDrink;
+export default BoxDrink;

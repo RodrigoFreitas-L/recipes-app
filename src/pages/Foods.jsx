@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import CardFood from '../components/CardFood';
+
+// Componentes
+import BoxFood from '../components/BoxFood';
 import Header from '../components/Header';
+
+// Actions
 import { setFoods } from '../redux/reducers/foodsSlice';
 
 function Foods() {
@@ -23,7 +27,7 @@ function Foods() {
   return (
     <>
       <Header title="Foods" />
-      <CardFood />
+      <BoxFood />
     </>
   );
 }
