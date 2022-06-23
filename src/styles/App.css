@@ -9,28 +9,7 @@ body {
   color: white;
   font-family: sans-serif;
 }
-
+/* 
 img {
   height: 50vh;
-}
-
-.container-header {
-  align-items: center;
-  background: #0fa36b;
-  display: flex;
-  flex-wrap: wrap;
-  height: 50px;
-  justify-content: space-around;
-  position: fixed;
-  width: 100%;
-}
-
-.container-header button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.container-header img {
-  height: auto;
-}
+} */

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import CardFood from '../components/CardFood';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { setFoods } from '../redux/reducers/foodsSlice';
 
@@ -24,6 +25,7 @@ function Foods() {
     <>
       <Header title="Foods" />
       <CardFood />
+      <Footer />
     </>
   );
 }
