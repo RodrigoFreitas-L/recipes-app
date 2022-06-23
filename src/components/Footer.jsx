@@ -3,7 +3,7 @@ import '../styles/Footer.css';
 import { Link } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
-import mealIcon from '../images/mealIcon.svg';
+import mealIcon from '../images/mealIcon.svg'; // Comentando para subir outro commit
 
 function Footer() {
   return (
