@@ -21,7 +21,11 @@ function Header({ title }) {
         {title}
       </h1>
 
-      {history.location.pathname.includes('explore')
+      {history.location.pathname === '/explore'
+        || history.location.pathname === '/explore/foods'
+        || history.location.pathname === '/explore/drinks'
+        || history.location.pathname === '/explore/foods/ingredients'
+        || history.location.pathname === '/explore/drinks/ingredients'
         || history.location.pathname.includes('profile')
         || history.location.pathname.includes('done-recipes')
         || history.location.pathname.includes('favorite-recipes')
