@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Actions
 import { setFoods } from '../redux/reducers/foodsSlice';
 import { setDrinks } from '../redux/reducers/drinksSlice';
+import { setSearchBar } from '../redux/reducers/searchBarSlice';
 
 function SearchBar() {
   const [radioFilter, setRadioFilter] = useState('');
   const [searchFilter, setSearchFilter] = useState('');
   const { location } = useHistory();
+  const { searchBar } = useSelector((state) => state.searchBar);
   const dispatch = useDispatch();
 
   const validationFirstLetter = (filter, value) => {
@@ -47,6 +49,7 @@ function SearchBar() {
         global.alert('Your search must have only 1 (one) character');
       }
     }
+    dispatch(setSearchBar(!searchBar));
   };
 
   return (
