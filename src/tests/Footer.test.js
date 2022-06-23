@@ -7,8 +7,8 @@ import Login from '../pages/Login';
 import Foods from '../pages/Foods';
 import Drinks from '../pages/Drinks';
 import Explore from '../pages/Explore';
-import CardFood from '../components/CardFood';
-import CardDrink from '../components/CardDrink';
+import CardFood from '../components/BoxFood';
+import CardDrink from '../components/BoxDrink';
 import CardFoodInProgress from '../components/CardFoodInProgress';
 import CardDrinkInProgress from '../components/CardDrinkInProgress';
 
