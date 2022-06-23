@@ -1,0 +1,25 @@
+.container-foods-or-drinks {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.5rem;
+  margin: 60px auto;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 90%;
+}
+
+.meal-or-drink {
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px green;
+  margin: 10px auto;
+  width: 40%;
+}
+
+.meal-or-drink img {
+  border-radius: 0 0 10px 10px ;
+  width: 100%;
+}
