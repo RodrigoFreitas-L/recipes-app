@@ -8,7 +8,7 @@ function BoxDrink() {
 
   useEffect(() => {
     const fetchAPI = async () => {
-      const data = await fetch('https://www.thecocktaildb.com//api/json/v1/1/search.php?s=')
+      const data = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
         .then((response) => response.json());
       setDrinksInitial(data.drinks);
     };
