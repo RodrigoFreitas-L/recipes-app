@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import Glass from '../components/Glass';
+import '../styles/Login.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -29,26 +31,37 @@ function Login() {
 
   return (
     <>
-      <h1>Hello world!</h1>
-      <input
-        data-testid="email-input"
-        type="email"
-        onChange={ ({ target }) => setEmail(target.value) }
-      />
-      <input
-        data-testid="password-input"
-        type="password"
-        onChange={ ({ target }) => setPassword(target.value) }
-      />
-
-      <button
-        data-testid="login-submit-btn"
-        type="button"
-        onClick={ () => handleTokenSubmit() }
-        disabled={ enterBtn }
-      >
-        Enter
-      </button>
+      <Glass />
+      <div className="container-login">
+        <div className="container-login-inputs">
+          <label htmlFor="email">
+            Email
+            <input
+              data-testid="email-input"
+              id="email"
+              type="email"
+              onChange={ ({ target }) => setEmail(target.value) }
+            />
+          </label>
+          <label htmlFor="password">
+            Password
+            <input
+              data-testid="password-input"
+              id="password"
+              type="password"
+              onChange={ ({ target }) => setPassword(target.value) }
+            />
+          </label>
+        </div>
+        <button
+          data-testid="login-submit-btn"
+          type="button"
+          onClick={ () => handleTokenSubmit() }
+          disabled={ enterBtn }
+        >
+          Enter
+        </button>
+      </div>
     </>
   );
 }

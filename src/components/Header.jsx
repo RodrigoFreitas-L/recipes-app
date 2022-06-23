@@ -12,7 +12,7 @@ function Header({ title }) {
   const history = useHistory();
 
   return (
-    <>
+    <div className="container-header">
       <Link to="/profile">
         <img data-testid="profile-top-btn" src={ profileIcon } alt="Profile" />
       </Link>
@@ -35,9 +35,9 @@ function Header({ title }) {
           </button>
         )}
 
-      {searchBar && <SearchBar />}
+      {searchBar && <div className="container-search-bar"><SearchBar /></div>}
 
-    </>
+    </div>
   );
 }
 
