@@ -1,0 +1,27 @@
+.container-login {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-login button {
+  padding: 5px;
+  width: 100%;
+}
+
+.container-login-inputs {
+  display: flex;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.container-login-inputs label {
+  text-align: center;
+  width: 100%;
+}
+
+.container-login-inputs input {
+  align-self: flex-end;
+  font-size: 12px;
+  padding: 5px;
+  width: 100%;
+}
