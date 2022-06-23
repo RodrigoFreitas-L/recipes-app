@@ -1,15 +1,15 @@
 .footer-container {
   align-items: center;
   background: #0fa36b;
+  bottom: 0;
   display: flex;
   flex-wrap: wrap;
   height: 50px;
   justify-content: space-around;
   position: fixed;
   width: 100%;
-  bottom: 0;
-};
+}
 
 .footer-container img {
   height: 10px;
-};
+}
