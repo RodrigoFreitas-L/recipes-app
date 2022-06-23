@@ -1,0 +1,27 @@
+.container-foods-or-drinks {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.5rem;
+  margin: 60px auto;
+  text-align: center;
+  width: 90%;
+}
+
+.meal-or-drink {
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  margin: 10px auto;
+  padding: 5px 0;
+  width: 40%;
+}
+
+.meal-or-drink img {
+  border-radius: 10px;
+  margin-top: 5px;
+  width: 80%;
+}
+
+.meal-or-drink:hover {
+  box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.5);
+}
