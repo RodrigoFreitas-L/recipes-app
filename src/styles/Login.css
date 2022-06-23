@@ -1,12 +1,11 @@
-button {
-  padding: 5px;
-  width: 100%;
-
-}
-
 .container-login {
   display: flex;
   flex-direction: column;
+}
+
+.container-login button {
+  padding: 5px;
+  width: 100%;
 }
 
 .container-login-inputs {
