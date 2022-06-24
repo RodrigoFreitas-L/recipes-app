@@ -1,19 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import Glass from './Glass';
 
 function BoxDrink() {
   const { drinks } = useSelector((state) => state.drinks);
   const [drinksInitial, setDrinksInitial] = useState([]);
+  const [drinkCategories, setDrinkCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAPI = async () => {
+      const categories = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
+        .then((response) => response.json());
+      setDrinkCategories(categories.drinks);
       const data = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
         .then((response) => response.json());
       setDrinksInitial(data.drinks);
+      setLoading(false);
     };
     fetchAPI();
   }, []);
+
+  const renderDrinksCategories = () => {
+    const MAX_LIST_NUMBER = 5;
+    const drinksCategoriesButtons = drinkCategories.map(({ strCategory }, index) => (
+      <button
+        data-testid={ `${strCategory}-category-filter` }
+        type="button"
+        key={ index }
+        onClick={ () => console.log(strCategory) }
+      >
+        {strCategory}
+      </button>
+    ));
+    return drinksCategoriesButtons.slice(0, MAX_LIST_NUMBER);
+  };
 
   const renderDrinks = () => {
     const MAX_LIST_NUMBER = 12;
@@ -65,6 +87,9 @@ function BoxDrink() {
 
   return (
     <>
+      <div className="container-categories-buttons">
+        {loading ? <Glass /> : renderDrinksCategories()}
+      </div>
       {renderDrinks()}
     </>
   );
