@@ -9,6 +9,8 @@
 
 .meal-or-drink {
   background-color: white;
+  box-shadow: 0 3px 1px 1px rgba(0, 0, 0, 0.5);
+  border: none;
   border-radius: 10px;
   color: black;
   margin: 10px auto;
@@ -20,8 +22,4 @@
   border-radius: 10px;
   margin-top: 5px;
   width: 80%;
-}
-
-.meal-or-drink:hover {
-  box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.5);
 }
