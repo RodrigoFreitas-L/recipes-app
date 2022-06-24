@@ -9,9 +9,9 @@
 
 .meal-or-drink {
   background-color: white;
-  box-shadow: 0 3px 1px 1px rgba(0, 0, 0, 0.5);
   border: none;
   border-radius: 10px;
+  box-shadow: 0 3px 1px 1px rgba(0, 0, 0, 0.5);
   color: black;
   margin: 10px auto;
   padding: 5px 0;
