@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import '../styles/FoodsAndDrinks.css';
 
 // Componentes
 import Header from '../components/Header';
@@ -28,7 +29,9 @@ function Foods() {
   return (
     <>
       <Header title="Foods" />
-      <BoxFood />
+      <div className="container-foods-or-drinks">
+        <BoxFood />
+      </div>
       <Footer />
     </>
   );
