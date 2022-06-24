@@ -43,7 +43,6 @@ function CardFood() {
 
   const renderRecipeDetails = () => {
     const details = foods.map((food) => {
-      console.log(food);
       const { idMeal } = food;
       return (
         <div key={ idMeal }>

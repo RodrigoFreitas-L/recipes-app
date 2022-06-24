@@ -18,7 +18,6 @@ function BoxRecomendation({ recomendations }) {
     const cards = recomendations.map((food, index) => {
       const { idDrink, idMeal, strDrink, strMeal, strDrinkThumb, strMealThumb } = food;
       const dataTestId = `${index}-recomendation-card`;
-      console.log(dataTestId);
       return (
         <a
           key={ index }
