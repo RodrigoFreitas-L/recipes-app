@@ -11,7 +11,7 @@ import { setFoods } from '../redux/reducers/foodsSlice';
 import { setDrinks } from '../redux/reducers/drinksSlice';
 
 function CardFood() {
-  const { location } = useHistory();
+  const history = useHistory();
   const dispatch = useDispatch();
   const { foods } = useSelector((state) => state.foods);
   const { drinks } = useSelector((state) => state.drinks);
@@ -19,7 +19,7 @@ function CardFood() {
 
   useEffect(() => {
     // Pegando o ID da URL
-    const id = location.pathname.split('/')[2];
+    const id = history.location.pathname.split('/')[2];
     // Fazemdo a requisição a API pelo ID da receita
     const fetchDrink = async () => {
       const MAX_DRINKS_LIST = 6;
@@ -39,7 +39,15 @@ function CardFood() {
       setLoading(false);
     };
     fetchFood();
-  }, [location, loading, dispatch]);
+  }, [history.location, loading, dispatch]);
+
+  const handleClickToInProgress = async (idMeal) => {
+    // const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
+    // const response = await fetch(url);
+    // const data = await response.json();
+    // dispatch(setFoods(data.meals));
+    history.push(`/foods/${idMeal}/in-progress`);
+  };
 
   const renderRecipeDetails = () => {
     const details = foods.map((food) => {
@@ -59,7 +67,14 @@ function CardFood() {
           <Video url={ food.strYoutube } />
           <p data-testid="instructions">{ food.strInstructions }</p>
           <BoxRecomendation recomendations={ drinks } />
-          <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ () => handleClickToInProgress(idMeal) }
+          >
+            Start Recipe
+
+          </button>
         </div>
       );
     });

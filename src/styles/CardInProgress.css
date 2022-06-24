@@ -1,0 +1,8 @@
+.incompleto {
+    text-decoration:none;
+
+}
+
+.completo {
+    text-decoration:line-through;
+}

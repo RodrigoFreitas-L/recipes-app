@@ -13,7 +13,7 @@ function CardDrink() {
   const dispatch = useDispatch();
   const { drinks } = useSelector((state) => state.drinks);
   const { foods } = useSelector((state) => state.foods);
-  const { location } = useHistory();
+  const { location, push } = useHistory();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -40,6 +40,14 @@ function CardDrink() {
     fetchDrinks();
   }, [location, loading, dispatch]);
 
+  const handleClickToInProgress = async (idDrink) => {
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    dispatch(setDrinks(data.drinks));
+    push(`/drinks/${idDrink}/in-progress`);
+  };
+
   const renderRecipeDetails = () => {
     const details = drinks.map((drink) => {
       const { idDrink } = drink;
@@ -57,7 +65,14 @@ function CardDrink() {
           <Ingredients recipe={ drink } />
           <p data-testid="instructions">{ drink.strInstructions }</p>
           <BoxRecomendation recomendations={ foods } />
-          <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            onClick={ () => handleClickToInProgress(idDrink) }
+          >
+            Start Recipe
+
+          </button>
         </div>
       );
     });
