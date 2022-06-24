@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setFoods } from '../redux/reducers/foodsSlice';
 import Header from './Header';
 import Footer from './Footer';
-import '../styles/ExploreFoodsIngredients.css';
+// import '../styles/ExploreFoodsIngredients.css';
 
 function ExploreFoodsIngredients() {
   const [ingredients, setIngredients] = useState([]);
@@ -36,31 +36,34 @@ function ExploreFoodsIngredients() {
   return (
     <div className="explore-food-ingredients-container">
       <Header title="Explore Ingredients" />
-      { ingredients.map((ingredient, index) => (
-        <button
-          type="button"
-          key={ ingredient.mealName }
-          onClick={ () => handleIngredientClick(ingredient.mealName) }
-        >
-          <div
-            data-testid={ `${index}-ingredient-card` }
-            className="ingredient-container"
+      <div className="container-foods-or-drinks">
+        {ingredients.map((ingredient, index) => (
+          <button
+            type="button"
+            key={ ingredient.mealName }
+            className="meal-or-drink"
+            onClick={ () => handleIngredientClick(ingredient.mealName) }
           >
-            <h3
-              data-testid={ `${index}-card-name` }
+            <div
+              data-testid={ `${index}-ingredient-card` }
             >
-              { ingredient.mealName }
-            </h3>
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ `https://www.themealdb.com/images/ingredients/${ingredient.mealName}-Small.png` }
-              alt={ ingredient.mealName }
-            />
+              <h1
+                data-testid={ `${index}-card-name` }
+              >
+                {ingredient.mealName}
+              </h1>
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ `https://www.themealdb.com/images/ingredients/${ingredient.mealName}-Small.png` }
+                alt={ ingredient.mealName }
+              />
 
-          </div>
+            </div>
 
-        </button>
-      )) }
+          </button>
+
+        ))}
+      </div>
       <Footer />
     </div>
   );

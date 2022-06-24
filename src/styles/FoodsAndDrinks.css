@@ -1,3 +1,20 @@
+.container-categories-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.container-categories-buttons button {
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  flex-grow: 1;
+  font-weight: 700;
+  margin: 1px;
+  padding: 10px;
+}
+
 .container-foods-or-drinks {
   display: flex;
   flex-wrap: wrap;
@@ -9,7 +26,9 @@
 
 .meal-or-drink {
   background-color: white;
+  border: none;
   border-radius: 10px;
+  box-shadow: 0 3px 1px 1px rgba(0, 0, 0, 0.5);
   color: black;
   margin: 10px auto;
   padding: 5px 0;
@@ -20,8 +39,4 @@
   border-radius: 10px;
   margin-top: 5px;
   width: 80%;
-}
-
-.meal-or-drink:hover {
-  box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.5);
 }
