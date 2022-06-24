@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -14,6 +14,10 @@ function Header({ title }) {
   const { searchBar } = useSelector((state) => state.searchBar);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    dispatch(setSearchBar(false));
+  }, [dispatch]);
 
   return (
     <div className="container-header">
