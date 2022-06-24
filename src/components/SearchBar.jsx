@@ -59,7 +59,7 @@ function SearchBar() {
           type="text"
           data-testid="search-input"
           className="form-control"
-          placeholder="Search..."
+          placeholder="Search by..."
           value={ searchFilter }
           onChange={ (e) => setSearchFilter(e.target.value) }
         />
@@ -68,6 +68,7 @@ function SearchBar() {
         <label htmlFor="ingredients">
           <input
             type="radio"
+            id="ingredients"
             name="filter"
             data-testid="ingredient-search-radio"
             value="ingredient"
@@ -75,9 +76,10 @@ function SearchBar() {
           />
           Ingredient
         </label>
-        <label htmlFor="filter">
+        <label htmlFor="name">
           <input
             type="radio"
+            id="name"
             name="filter"
             data-testid="name-search-radio"
             value="name"
@@ -88,6 +90,7 @@ function SearchBar() {
         <label htmlFor="firstLetter">
           <input
             type="radio"
+            id="firstLetter"
             name="filter"
             data-testid="first-letter-search-radio"
             value="firstLetter"

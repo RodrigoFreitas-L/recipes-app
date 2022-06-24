@@ -21,34 +21,32 @@ function Header({ title }) {
 
   return (
     <div className="container-header">
-      <Link to="/profile">
-        <img data-testid="profile-top-btn" src={ profileIcon } alt="Profile" />
-      </Link>
-
-      <h1 data-testid="page-title">
-        {title}
-      </h1>
-
-      {history.location.pathname === '/explore'
-        || history.location.pathname === '/explore/foods'
-        || history.location.pathname === '/explore/drinks'
-        || history.location.pathname === '/explore/foods/ingredients'
-        || history.location.pathname === '/explore/drinks/ingredients'
-        || history.location.pathname.includes('profile')
-        || history.location.pathname.includes('done-recipes')
-        || history.location.pathname.includes('favorite-recipes')
-        ? ''
-        : (
-          <button
-            type="button"
-            onClick={ () => dispatch(setSearchBar(!searchBar)) }
-          >
-            <img data-testid="search-top-btn" src={ searchIcon } alt="Search" />
-          </button>
-        )}
-
+      <header>
+        <Link to="/profile">
+          <img data-testid="profile-top-btn" src={ profileIcon } alt="Profile" />
+        </Link>
+        <h1 data-testid="page-title">
+          {title}
+        </h1>
+        {history.location.pathname === '/explore'
+          || history.location.pathname === '/explore/foods'
+          || history.location.pathname === '/explore/drinks'
+          || history.location.pathname === '/explore/foods/ingredients'
+          || history.location.pathname === '/explore/drinks/ingredients'
+          || history.location.pathname.includes('profile')
+          || history.location.pathname.includes('done-recipes')
+          || history.location.pathname.includes('favorite-recipes')
+          ? ''
+          : (
+            <button
+              type="button"
+              onClick={ () => dispatch(setSearchBar(!searchBar)) }
+            >
+              <img data-testid="search-top-btn" src={ searchIcon } alt="Search" />
+            </button>
+          )}
+      </header>
       {searchBar && <div className="container-search-bar"><SearchBar /></div>}
-
     </div>
   );
 }
