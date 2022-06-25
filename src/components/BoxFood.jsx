@@ -5,8 +5,12 @@ import Glass from './Glass';
 
 function BoxFood() {
   const { foods } = useSelector((state) => state.foods);
-  const [foodsInitial, setFoodsInitial] = useState([]);
+  const [renderedFoods, setRenderedFoods] = useState([]);
+  const [initialFoods, setInitialFoods] = useState([]);
   const [foodCategories, setFoodCategories] = useState([]);
+  const [categoryToggle, setCategoryToggle] = useState(
+    { status: false, category: '' },
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,11 +20,37 @@ function BoxFood() {
       setFoodCategories(categories.meals);
       const data = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
         .then((response) => response.json());
-      setFoodsInitial(data.meals);
+      setRenderedFoods(data.meals);
+      setInitialFoods(data.meals);
       setLoading(false);
     };
     fetchAPI();
   }, []);
+
+  useEffect(() => {
+    if (categoryToggle.status) {
+      setLoading(true);
+      const fetchAPI = async () => {
+        const categories = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryToggle.category}`)
+          .then((response) => response.json());
+        setRenderedFoods(categories.meals);
+        setLoading(false);
+      }; fetchAPI();
+    }
+  }, [categoryToggle]);
+
+  const filterByCategory = (category) => {
+    if (categoryToggle.category === (category)) {
+      if (categoryToggle.status) {
+        setRenderedFoods(initialFoods);
+        setCategoryToggle({ status: false, category: '' });
+      }
+    } else {
+      setCategoryToggle({ status: true, category });
+      setRenderedFoods(initialFoods
+        .filter(({ strCategory }) => strCategory === category));
+    }
+  };
 
   const renderFoodsCategories = () => {
     const MAX_LIST_NUMBER = 5;
@@ -29,7 +59,7 @@ function BoxFood() {
         data-testid={ `${strCategory}-category-filter` }
         type="button"
         key={ index }
-        onClick={ () => console.log(strCategory) }
+        onClick={ () => filterByCategory(strCategory) }
       >
         {strCategory}
       </button>
@@ -51,7 +81,6 @@ function BoxFood() {
               data-testid={ `${index}-card-name` }
             >
               {meal.strMeal}
-
             </h1>
             <img
               data-testid={ `${index}-card-img` }
@@ -62,7 +91,7 @@ function BoxFood() {
         ));
         return listFoods.slice(0, MAX_LIST_NUMBER);
       }
-      const listFoodsInitial = foodsInitial.map((meal, index) => (
+      const listFoodsInitial = renderedFoods.map((meal, index) => (
         <div
           data-testid={ `${index}-recipe-card` }
           key={ meal.idMeal }
@@ -90,7 +119,7 @@ function BoxFood() {
       <div className="container-categories-buttons">
         {loading ? <Glass /> : renderFoodsCategories()}
       </div>
-      {renderFoods()}
+      {!loading && renderFoods()}
     </>
   );
 }

@@ -5,8 +5,12 @@ import Glass from './Glass';
 
 function BoxDrink() {
   const { drinks } = useSelector((state) => state.drinks);
-  const [drinksInitial, setDrinksInitial] = useState([]);
+  const [renderedDrinks, setRenderedDrinks] = useState([]);
+  const [initialDrinks, setInitialDrinks] = useState([]);
   const [drinkCategories, setDrinkCategories] = useState([]);
+  const [categoryToggle, setCategoryToggle] = useState(
+    { status: false, category: '' },
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,11 +20,37 @@ function BoxDrink() {
       setDrinkCategories(categories.drinks);
       const data = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
         .then((response) => response.json());
-      setDrinksInitial(data.drinks);
+      setRenderedDrinks(data.drinks);
+      setInitialDrinks(data.drinks);
       setLoading(false);
     };
     fetchAPI();
   }, []);
+
+  useEffect(() => {
+    if (categoryToggle.status) {
+      setLoading(true);
+      const fetchAPI = async () => {
+        const categories = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categoryToggle.category}`)
+          .then((response) => response.json());
+        setRenderedDrinks(categories.drinks);
+        setLoading(false);
+      }; fetchAPI();
+    }
+  }, [categoryToggle]);
+
+  const filterByCategory = (category) => {
+    if (categoryToggle.category === (category)) {
+      if (categoryToggle.status) {
+        setRenderedDrinks(initialDrinks);
+        setCategoryToggle({ status: false, category: '' });
+      }
+    } else {
+      setCategoryToggle({ status: true, category });
+      setRenderedDrinks(initialDrinks
+        .filter(({ strCategory }) => strCategory === category));
+    }
+  };
 
   const renderDrinksCategories = () => {
     const MAX_LIST_NUMBER = 5;
@@ -29,7 +59,7 @@ function BoxDrink() {
         data-testid={ `${strCategory}-category-filter` }
         type="button"
         key={ index }
-        onClick={ () => console.log(strCategory) }
+        onClick={ () => filterByCategory(strCategory) }
       >
         {strCategory}
       </button>
@@ -62,7 +92,7 @@ function BoxDrink() {
         ));
         return listDrinks.slice(0, MAX_LIST_NUMBER);
       }
-      const listDrinksInitial = drinksInitial.map((drink, index) => (
+      const listDrinksInitial = renderedDrinks.map((drink, index) => (
         <div
           data-testid={ `${index}-recipe-card` }
           key={ drink.idDrink }
@@ -90,7 +120,7 @@ function BoxDrink() {
       <div className="container-categories-buttons">
         {loading ? <Glass /> : renderDrinksCategories()}
       </div>
-      {renderDrinks()}
+      {!loading && renderDrinks()}
     </>
   );
 }
