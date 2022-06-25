@@ -81,7 +81,6 @@ function BoxFood() {
               data-testid={ `${index}-card-name` }
             >
               {meal.strMeal}
-
             </h1>
             <img
               data-testid={ `${index}-card-img` }

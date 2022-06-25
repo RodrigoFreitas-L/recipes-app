@@ -59,6 +59,7 @@ function BoxDrink() {
         data-testid={ `${strCategory}-category-filter` }
         type="button"
         key={ index }
+
         onClick={ () => filterByCategory(strCategory) }
       >
         {strCategory}
