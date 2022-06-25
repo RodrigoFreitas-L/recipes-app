@@ -27,6 +27,18 @@ function BoxFood() {
     fetchAPI();
   }, []);
 
+  useEffect(() => {
+    if (categoryToggle.status) {
+      setLoading(true);
+      const fetchAPI = async () => {
+        const categories = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryToggle.category}`)
+          .then((response) => response.json());
+        setRenderedFoods(categories.meals);
+        setLoading(false);
+      }; fetchAPI();
+    }
+  }, [categoryToggle]);
+
   const filterByCategory = (category) => {
     if (categoryToggle.category === (category)) {
       if (categoryToggle.status) {
