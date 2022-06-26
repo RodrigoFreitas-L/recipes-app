@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFoods } from '../redux/reducers/foodsSlice';
+import BoxFoodCard from './BoxFoodCard';
 import Glass from './Glass';
 
 function BoxFood() {
@@ -12,6 +14,7 @@ function BoxFood() {
     { status: false, category: '' },
   );
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -52,8 +55,24 @@ function BoxFood() {
     }
   };
 
+  const renderAllFoods = () => {
+    dispatch(setFoods([]));
+    setCategoryToggle({ status: false, category: '' });
+    setRenderedFoods(initialFoods);
+  };
+
   const renderFoodsCategories = () => {
-    const MAX_LIST_NUMBER = 5;
+    const MAX_LIST_NUMBER = 6;
+    const allButton = [
+      <button
+        key="a"
+        data-testid="All-category-filter"
+        type="button"
+        onClick={ () => renderAllFoods() }
+      >
+        All
+      </button>,
+    ];
     const foodsCategoriesButtons = foodCategories.map(({ strCategory }, index) => (
       <button
         data-testid={ `${strCategory}-category-filter` }
@@ -64,52 +83,29 @@ function BoxFood() {
         {strCategory}
       </button>
     ));
-    return foodsCategoriesButtons.slice(0, MAX_LIST_NUMBER);
+    const concatanatedButtons = [...allButton, ...foodsCategoriesButtons];
+    return concatanatedButtons.slice(0, MAX_LIST_NUMBER);
   };
 
   const renderFoods = () => {
     const MAX_LIST_NUMBER = 12;
     if (foods !== null) {
       if (foods.length > 0) {
-        const listFoods = foods.map((meal, index) => (
-          <div
-            data-testid={ `${index}-recipe-card` }
-            key={ meal.idMeal }
-            className="meal-or-drink"
-          >
-            <h1
-              data-testid={ `${index}-card-name` }
-            >
-              {meal.strMeal}
-            </h1>
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ meal.strMealThumb }
-              alt={ meal.strMeal }
-            />
-          </div>
+        const listFoods = foods.map(({ idMeal, strMeal, strMealThumb }, index) => (
+          <BoxFoodCard
+            key={ index }
+            meal={ { index, idMeal, strMeal, strMealThumb } }
+          />
         ));
         return listFoods.slice(0, MAX_LIST_NUMBER);
       }
-      const listFoodsInitial = renderedFoods.map((meal, index) => (
-        <div
-          data-testid={ `${index}-recipe-card` }
-          key={ meal.idMeal }
-          className="meal-or-drink"
-        >
-          <h1
-            data-testid={ `${index}-card-name` }
-          >
-            {meal.strMeal}
-
-          </h1>
-          <img
-            data-testid={ `${index}-card-img` }
-            src={ meal.strMealThumb }
-            alt={ meal.strMeal }
+      const listFoodsInitial = renderedFoods
+        .map(({ idMeal, strMeal, strMealThumb }, index) => (
+          <BoxFoodCard
+            meal={ { index, idMeal, strMeal, strMealThumb } }
+            key={ index }
           />
-        </div>
-      ));
+        ));
       return listFoodsInitial.slice(0, MAX_LIST_NUMBER);
     }
   };

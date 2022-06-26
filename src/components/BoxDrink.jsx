@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setDrinks } from '../redux/reducers/drinksSlice';
+import BoxDrinkCard from './BoxDrinkCard';
 import Glass from './Glass';
 
 function BoxDrink() {
@@ -12,6 +14,7 @@ function BoxDrink() {
     { status: false, category: '' },
   );
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchAPI = async () => {
@@ -52,8 +55,24 @@ function BoxDrink() {
     }
   };
 
+  const renderAllDrinks = () => {
+    dispatch(setDrinks([]));
+    setCategoryToggle({ status: false, category: '' });
+    setRenderedDrinks(initialDrinks);
+  };
+
   const renderDrinksCategories = () => {
-    const MAX_LIST_NUMBER = 5;
+    const MAX_LIST_NUMBER = 6;
+    const allButton = [
+      <button
+        key="a"
+        data-testid="All-category-filter"
+        type="button"
+        onClick={ () => renderAllDrinks() }
+      >
+        All
+      </button>,
+    ];
     const drinksCategoriesButtons = drinkCategories.map(({ strCategory }, index) => (
       <button
         data-testid={ `${strCategory}-category-filter` }
@@ -64,53 +83,29 @@ function BoxDrink() {
         {strCategory}
       </button>
     ));
-    return drinksCategoriesButtons.slice(0, MAX_LIST_NUMBER);
+    const concatanatedButtons = [...allButton, ...drinksCategoriesButtons];
+    return concatanatedButtons.slice(0, MAX_LIST_NUMBER);
   };
 
   const renderDrinks = () => {
     const MAX_LIST_NUMBER = 12;
     if (drinks !== null) {
       if (drinks.length > 0) {
-        const listDrinks = drinks.map((drink, index) => (
-          <div
-            data-testid={ `${index}-recipe-card` }
-            key={ drink.idDrink }
-            className="meal-or-drink"
-          >
-            <h1
-              data-testid={ `${index}-card-name` }
-            >
-              {drink.strDrink}
-
-            </h1>
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ drink.strDrinkThumb }
-              alt={ drink.strDrink }
-            />
-          </div>
+        const listDrinks = drinks.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
+          <BoxDrinkCard
+            key={ index }
+            drink={ { index, idDrink, strDrink, strDrinkThumb } }
+          />
         ));
         return listDrinks.slice(0, MAX_LIST_NUMBER);
       }
-      const listDrinksInitial = renderedDrinks.map((drink, index) => (
-        <div
-          data-testid={ `${index}-recipe-card` }
-          key={ drink.idDrink }
-          className="meal-or-drink"
-        >
-          <h1
-            data-testid={ `${index}-card-name` }
-          >
-            {drink.strDrink}
-
-          </h1>
-          <img
-            data-testid={ `${index}-card-img` }
-            src={ drink.strDrinkThumb }
-            alt={ drink.strDrink }
+      const listDrinksInitial = renderedDrinks
+        .map(({ idDrink, strDrink, strDrinkThumb }, index) => (
+          <BoxDrinkCard
+            drink={ { index, idDrink, strDrink, strDrinkThumb } }
+            key={ index }
           />
-        </div>
-      ));
+        ));
       return listDrinksInitial.slice(0, MAX_LIST_NUMBER);
     }
   };
