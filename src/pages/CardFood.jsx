@@ -42,10 +42,6 @@ function CardFood() {
   }, [history.location, loading, dispatch]);
 
   const handleClickToInProgress = async (idMeal) => {
-    // const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
-    // const response = await fetch(url);
-    // const data = await response.json();
-    // dispatch(setFoods(data.meals));
     history.push(`/foods/${idMeal}/in-progress`);
   };
 
@@ -68,12 +64,12 @@ function CardFood() {
           <p data-testid="instructions">{ food.strInstructions }</p>
           <BoxRecomendation recomendations={ drinks } />
           <button
+            style={ { width: '25%', left: '35%', bottom: '0', position: 'fixed' } }
             type="button"
             data-testid="start-recipe-btn"
             onClick={ () => handleClickToInProgress(idMeal) }
           >
             Start Recipe
-
           </button>
         </div>
       );

@@ -21,7 +21,8 @@ function Ingredients({ recipe }) {
     return ingredientsList.map((ingredient, index) => {
       const value = ingredient[1];
       const dataTestId = `${index}-ingredient-name-and-measure`;
-      const result = `${measuresList[index][1]} ${value}`;
+      const result = `${measuresList[index] === undefined
+        ? '' : measuresList[index][1]} ${value}`;
       return (<li data-testid={ dataTestId } key={ ingredient[0] }>{result}</li>);
     });
   };

@@ -21,11 +21,11 @@ function CardDrink() {
     const id = location.pathname.split('/')[2];
     // Fazendo a requisição a API pelo ID da receita
     const fetchFoods = async () => {
-      const MAX_DRINKS_LIST = 7;
+      const MAX_DRINKS_LIST = 6;
       const endpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const response = await fetch(endpoint);
       const data = await response.json();
-      dispatch(setFoods(data.meals.slice(1, MAX_DRINKS_LIST)));
+      dispatch(setFoods(data.meals.slice(0, MAX_DRINKS_LIST)));
     };
 
     const fetchDrinks = async () => {
@@ -41,10 +41,6 @@ function CardDrink() {
   }, [location, loading, dispatch]);
 
   const handleClickToInProgress = async (idDrink) => {
-    const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idDrink}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    dispatch(setDrinks(data.drinks));
     push(`/drinks/${idDrink}/in-progress`);
   };
 
@@ -66,12 +62,12 @@ function CardDrink() {
           <p data-testid="instructions">{ drink.strInstructions }</p>
           <BoxRecomendation recomendations={ foods } />
           <button
+            style={ { margin: 'auto', width: '100%', bottom: '0', position: 'fixed' } }
             type="button"
             data-testid="start-recipe-btn"
             onClick={ () => handleClickToInProgress(idDrink) }
           >
             Start Recipe
-
           </button>
         </div>
       );
