@@ -1,20 +1,33 @@
-.container-header header {
+.container-header {
   align-items: center;
   background: #0fa36b;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   height: 50px;
-  justify-content: space-around;
+  justify-content: space-between;
   position: fixed;
   top: 0;
   width: 100%;
 }
 
+.header-profile-btn, .header-search-btn {
+  min-width: 70px;
+  text-align: center;
+  width: 70px;
+}
+
+.header-page-title {
+  font-size: 0.8rem;
+  line-height: 1.3rem;
+  text-align: center;
+}
+
 .search-bar button {
   background-color: #0fa36b;
-  border: none;
+  border: 2px solid black;
   border-radius: 5px;
   color: white;
+  cursor: pointer;
   font-size: 1.2rem;
   font-weight: 700;
   margin: 0 auto;
@@ -22,14 +35,14 @@
   width: 150px;
 }
 
-.container-header header button {
+.container-header button {
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
-.container-header header img {
-  height: auto;
+.container-header img {
+  min-height: 30px;
 }
 
 .container-search-bar {

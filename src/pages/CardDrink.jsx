@@ -13,7 +13,7 @@ function CardDrink() {
   const dispatch = useDispatch();
   const { drinks } = useSelector((state) => state.drinks);
   const { foods } = useSelector((state) => state.foods);
-  const { location } = useHistory();
+  const { location, push } = useHistory();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -40,6 +40,10 @@ function CardDrink() {
     fetchDrinks();
   }, [location, loading, dispatch]);
 
+  const handleClickToInProgress = async (idDrink) => {
+    push(`/drinks/${idDrink}/in-progress`);
+  };
+
   const renderRecipeDetails = () => {
     const details = drinks.map((drink) => {
       const { idDrink } = drink;
@@ -61,6 +65,7 @@ function CardDrink() {
             style={ { margin: 'auto', width: '100%', bottom: '0', position: 'fixed' } }
             type="button"
             data-testid="start-recipe-btn"
+            onClick={ () => handleClickToInProgress(idDrink) }
           >
             Start Recipe
           </button>

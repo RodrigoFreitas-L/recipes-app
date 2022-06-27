@@ -11,7 +11,7 @@ import { setFoods } from '../redux/reducers/foodsSlice';
 import { setDrinks } from '../redux/reducers/drinksSlice';
 
 function CardFood() {
-  const { location } = useHistory();
+  const history = useHistory();
   const dispatch = useDispatch();
   const { foods } = useSelector((state) => state.foods);
   const { drinks } = useSelector((state) => state.drinks);
@@ -19,7 +19,7 @@ function CardFood() {
 
   useEffect(() => {
     // Pegando o ID da URL
-    const id = location.pathname.split('/')[2];
+    const id = history.location.pathname.split('/')[2];
     // Fazemdo a requisição a API pelo ID da receita
     const fetchDrink = async () => {
       const MAX_DRINKS_LIST = 6;
@@ -39,7 +39,11 @@ function CardFood() {
       setLoading(false);
     };
     fetchFood();
-  }, [location, loading, dispatch]);
+  }, [history.location, loading, dispatch]);
+
+  const handleClickToInProgress = async (idMeal) => {
+    history.push(`/foods/${idMeal}/in-progress`);
+  };
 
   const renderRecipeDetails = () => {
     const details = foods.map((food) => {
@@ -63,6 +67,7 @@ function CardFood() {
             style={ { width: '25%', left: '35%', bottom: '0', position: 'fixed' } }
             type="button"
             data-testid="start-recipe-btn"
+            onClick={ () => handleClickToInProgress(idMeal) }
           >
             Start Recipe
           </button>
