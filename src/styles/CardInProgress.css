@@ -1,8 +1,10 @@
-.incompleto {
-  text-decoration: none;
-
+.checkbox {
+  display: flex;
+  /* justify-content: space-around; */
+  border: 1px solid green;
+  flex-direction: column;
 }
 
-.completo {
+.checkBoxInput:checked + li {
   text-decoration: line-through;
 }

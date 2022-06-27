@@ -1,8 +1,40 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
-function Ingredients({ recipe }) {
-  // const [completed, useCompleted] = useState(false);
+function Ingredients({ recipe, storageName }) {
+  const history = useHistory();
+  const storage = localStorage.getItem(storageName);
+  // const [] = useState(false);
+  // const [isChecked, setIsChecked] = useState([]);
+
+  const handleCheckBoxIngredient = ({ target }, result) => {
+    // console.log(target.nextElementSibling.innerHTML);
+    if (target.checked) {
+      const getIngredient = JSON.parse(localStorage.getItem(storageName));
+      const newIngredient = [...getIngredient, result];
+      localStorage.setItem(storageName, JSON.stringify(newIngredient));
+    } else {
+      const getIngredient = JSON.parse(localStorage.getItem(storageName));
+      const index = getIngredient.indexOf(result);
+      getIngredient.splice(index, 1);
+      localStorage.setItem(storageName, JSON.stringify(getIngredient));
+    }
+  };
+
+  useEffect(() => {
+    const checkVerify = () => {
+      const nodeList = document.querySelectorAll('.foodIngredient');
+      // const makeAList = Array.from(nodeList);
+      const makeAList = [...nodeList];
+      const newList = makeAList.map((list) => (storage.includes(list.innerHTML)
+        ? list.previousElementSibling.setAttribute('checked', true)
+        : list.previousElementSibling.setAttribute('unchecked', true)));
+      return newList;
+    };
+    checkVerify();
+  }, [storage]);
 
   const renderIngredients = () => {
     // Pegando os ingredientes
@@ -20,46 +52,27 @@ function Ingredients({ recipe }) {
       return false;
     });
 
-    // const handleScratch = (e) => {
-    //   if (e.target.classList.contains('completed')) {
-    //     const riscaTarget = (item) => {
-    //       const taskItem = item.target;
-    //       if (taskItem.className === 'completed') {
-    //         taskItem.classList.remove('completed');
-    //       } else {
-    //         taskItem.classList.add('completed');
-    //       }
-    //     };
-    //     return riscaTarget;
-    //   }
-    // };
-
-    const handleRiscada = (e) => {
-      if (e.target.className === 'completo') {
-        return true;
-      } return false;
-    };
-
     return ingredientsList.map((ingredient, index) => {
       const value = ingredient[1];
-      const dataTestId = `${index}-ingredient-name-and-measure`;
       const result = `${measuresList[index][1]} ${value}`;
       return (
-        <li
-          data-testid={ dataTestId }
-          key={ ingredient[0] }
-          className={ (e) => (handleRiscada(e) ? 'completo' : 'incompleto') }
+        <label
+          htmlFor={ ingredient[index] }
+          data-testid={ `${index}-ingredient-step` }
+          key={ `${index}-${ingredient}` }
         >
           <input
-            data-testid={ `${index}-ingredient-step` }
             type="checkbox"
-            name="ingredient-step"
-            value="ingredient-step"
-            // checked={ drink.ingredientStep }
-            onClick={ (e) => handleRiscada(e) }
+            id={ ingredient[index] }
+            className="checkBoxInput"
+            onChange={ (e) => handleCheckBoxIngredient(e, result) }
           />
-          {result}
-        </li>
+          <li
+            className="foodIngredient"
+          >
+            {result}
+          </li>
+        </label>
       );
     });
   };
