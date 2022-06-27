@@ -59,7 +59,13 @@ function CardFood() {
           <Video url={ food.strYoutube } />
           <p data-testid="instructions">{ food.strInstructions }</p>
           <BoxRecomendation recomendations={ drinks } />
-          <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+          <button
+            style={ { width: '25%', left: '35%', bottom: '0', position: 'fixed' } }
+            type="button"
+            data-testid="start-recipe-btn"
+          >
+            Start Recipe
+          </button>
         </div>
       );
     });

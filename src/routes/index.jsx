@@ -8,7 +8,7 @@ import Drinks from '../pages/Drinks';
 import CardFood from '../pages/CardFood';
 import CardDrink from '../pages/CardDrink';
 import CardFoodInProgress from '../components/CardFoodInProgress';
-import CardDrinkInProgress from '../components/CardDrinkInProgress';
+// import CardDrinkInProgress from '../components/CardDrinkInProgress';
 import Explore from '../pages/Explore';
 import ExploreFoods from '../components/ExploreFoods';
 import ExploreDrinks from '../components/ExploreDrinks';
@@ -28,7 +28,7 @@ function Routes() {
       <Route path="/foods/:id" component={ CardFood } />
       <Route path="/drinks/:id" component={ CardDrink } />
       <Route path="/foods/:id/in-progress" component={ CardFoodInProgress } />
-      <Route path="/drinks/:id/in-progress" component={ CardDrinkInProgress } />
+      <Route path="/drinks/:id/in-progress" component={ CardFoodInProgress } />
       <Route exact path="/explore" component={ Explore } />
       <Route exact path="/explore/foods" component={ ExploreFoods } />
       <Route exact path="/explore/drinks" component={ ExploreDrinks } />

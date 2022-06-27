@@ -21,11 +21,11 @@ function CardDrink() {
     const id = location.pathname.split('/')[2];
     // Fazendo a requisição a API pelo ID da receita
     const fetchFoods = async () => {
-      const MAX_DRINKS_LIST = 7;
+      const MAX_DRINKS_LIST = 6;
       const endpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const response = await fetch(endpoint);
       const data = await response.json();
-      dispatch(setFoods(data.meals.slice(1, MAX_DRINKS_LIST)));
+      dispatch(setFoods(data.meals.slice(0, MAX_DRINKS_LIST)));
     };
 
     const fetchDrinks = async () => {
@@ -57,7 +57,13 @@ function CardDrink() {
           <Ingredients recipe={ drink } />
           <p data-testid="instructions">{ drink.strInstructions }</p>
           <BoxRecomendation recomendations={ foods } />
-          <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+          <button
+            style={ { margin: 'auto', width: '100%', bottom: '0', position: 'fixed' } }
+            type="button"
+            data-testid="start-recipe-btn"
+          >
+            Start Recipe
+          </button>
         </div>
       );
     });
