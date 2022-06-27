@@ -26,7 +26,6 @@ function Ingredients({ recipe, storageName }) {
   useEffect(() => {
     const checkVerify = () => {
       const nodeList = document.querySelectorAll('.foodIngredient');
-      // const makeAList = Array.from(nodeList);
       const makeAList = [...nodeList];
       const newList = makeAList.map((list) => (storage.includes(list.innerHTML)
         ? list.previousElementSibling.setAttribute('checked', true)
