@@ -12,25 +12,6 @@ function CardDrinkInProgress() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
-  //   useEffect(() => {
-  //     const riscaTarget = (item) => {
-  //       const taskItem = item.target;
-  //       if (taskItem.className === 'completed') {
-  //         taskItem.classList.remove('completed');
-  //       } else {
-  //         taskItem.classList.add('completed');
-  //       }
-  //     };
-
-  //     const riscaTargetOnClick = () => {
-  //       const taskTarget = document.querySelectorAll('li');
-  //       for (let i = 0; i < taskTarget.length; i += 1) {
-  //         taskTarget[i].addEventListener('dblclick', riscaTarget);
-  //       }
-  //     };
-  //     riscaTargetOnClick();
-  //   }, []);
-
   useEffect(() => {
     const fetchDrink = async () => {
       const id = location.pathname.split('/')[2];
@@ -42,29 +23,11 @@ function CardDrinkInProgress() {
     };
 
     fetchDrink();
-
-    // const riscaTarget = (item) => {
-    //   const taskItem = item.target;
-    //   if (taskItem.className === 'completed') {
-    //     taskItem.classList.remove('completed');
-    //   } else {
-    //     taskItem.classList.add('completed');
-    //   }
-    // };
-
-    // const riscaTargetOnClick = () => {
-    //   const taskTarget = document.querySelectorAll('li');
-    //   for (let i = 0; i < taskTarget.length; i += 1) {
-    //     taskTarget[i].addEventListener('dblclick', riscaTarget);
-    //   }
-    // };
-    // riscaTargetOnClick();
   }, [dispatch, location.pathname]);
 
   const listDrinkInProgress = () => {
-    const listInProgress = drinks.map((drink, index) => (
+    const listInProgress = drinks.map((drink) => (
       <div
-        data-testid={ `${index}-recipe-card` }
         key={ drink.idDrink }
       >
         <img
@@ -73,37 +36,37 @@ function CardDrinkInProgress() {
           alt={ drink.strDrink }
         />
         <h1
-          data-testid={ `${index}-recipe-title` }
+          data-testid="recipe-title"
         >
           { drink.strDrink }
         </h1>
         <button
-          data-testid={ `${index}-share-btn` }
+          data-testid="share-btn"
           type="button"
         >
           Share
         </button>
         <button
-          data-testid={ `${index}-favorite-btn` }
+          data-testid="favorite-btn"
           type="button"
         >
-          Favodssddrite
+          Favorite
         </button>
         <p
-          data-testid={ `${index}-recipe-category` }
+          data-testid="recipe-category"
         >
           { drink.strCategory }
         </p>
 
-        <IngredientsInProgress recipe={ drink } />
+        <IngredientsInProgress recipe={ drink } storageName="savedDrinksIngredients" />
 
         <p
-          data-testid={ `${index}-instructions` }
+          data-testid="instructions"
         >
           { drink.strInstructions }
         </p>
         <button
-          data-testid={ `${index}-finish-recipe-btn` }
+          data-testid="finish-recipe-btn"
           type="button"
         >
           Finish

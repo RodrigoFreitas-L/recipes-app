@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // Componentes
 import Routes from './routes';
@@ -7,6 +7,20 @@ import Routes from './routes';
 import './styles/App.css';
 
 function App() {
+  useEffect(() => {
+    const initialFoodStorage = () => {
+      if (!localStorage.getItem('savedFoodsIngredients')) {
+        localStorage.setItem('savedFoodsIngredients', JSON.stringify([]));
+      }
+    };
+    const initialDrinksStorage = () => {
+      if (!localStorage.getItem('savedDrinksIngredients')) {
+        localStorage.setItem('savedDrinksIngredients', JSON.stringify([]));
+      }
+    };
+    initialDrinksStorage();
+    initialFoodStorage();
+  }, []);
   return (
     <Routes />
   );
