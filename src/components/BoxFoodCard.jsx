@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 function BoxFoodCard({ meal: { index, idMeal, strMeal, strMealThumb } }) {
   return (
-    <Link to={ `/foods/${idMeal}` }>
-      <div
-        data-testid={ `${index}-recipe-card` }
-        key={ idMeal }
-        className="meal-or-drink"
-      >
+    <div
+      data-testid={ `${index}-recipe-card` }
+      key={ idMeal }
+      className="meal-or-drink"
+    >
+      <Link to={ `/foods/${idMeal}` }>
         <h1
           data-testid={ `${index}-card-name` }
         >
@@ -21,8 +21,8 @@ function BoxFoodCard({ meal: { index, idMeal, strMeal, strMealThumb } }) {
           src={ strMealThumb }
           alt={ strMeal }
         />
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }
 
