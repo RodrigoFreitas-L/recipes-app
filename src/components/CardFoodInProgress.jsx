@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setFoods } from '../redux/reducers/foodsSlice';
 import IngredientsInProgress from './RecipeDetails/IngredientsInProgress';
+import { setFavoriteFoods } from '../redux/reducers/favoriteFoodsSlice';
 
+const copy = require('clipboard-copy');
 // fazer a rota da tela de detalhes para essa tela de receitas em andamento
 function CardFoodInProgress() {
   const { foods } = useSelector((state) => state.foods);
@@ -23,6 +25,32 @@ function CardFoodInProgress() {
     fetchFoods();
   }, [dispatch, location.pathname]);
 
+  const handleShareClick = ({ target }) => {
+    const path = location.pathname;
+    const newPath = path.includes('/in-progress')
+      ? path.split('/in-progress').shift()
+      : path;
+    target.innerHTML = 'Link copied!';
+    copy(`http://localhost:3000${newPath}`);
+  };
+
+  const handleFavoriteClick = (favFood) => {
+    dispatch(setFavoriteFoods(favFood));
+    const favFoodArray = favFood[0];
+    const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const settingFavFood = {
+      id: favFoodArray.idMeal,
+      type: 'food',
+      nationality: favFoodArray.strArea,
+      category: favFoodArray.strCategory,
+      alcoholicOrNot: 'non-alcoholic',
+      name: favFoodArray.strMeal,
+      image: favFoodArray.strMealThumb,
+    };
+    const newStorage = [...getStorage, settingFavFood];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newStorage));
+  };
+
   const listFoodsInProgress = () => {
     const listInProgress = foods.map((food) => (
       <div
@@ -41,12 +69,14 @@ function CardFoodInProgress() {
         <button
           data-testid="share-btn"
           type="button"
+          onClick={ (e) => handleShareClick(e) }
         >
           Share
         </button>
         <button
           data-testid="favorite-btn"
           type="button"
+          onClick={ () => handleFavoriteClick(foods) }
         >
           Favorite
         </button>

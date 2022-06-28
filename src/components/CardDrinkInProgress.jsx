@@ -5,6 +5,8 @@ import { setDrinks } from '../redux/reducers/drinksSlice';
 import IngredientsInProgress from './RecipeDetails/IngredientsInProgress';
 import '../styles/CardInProgress.css';
 
+const copy = require('clipboard-copy');
+
 // fazer a rota da tela de detalhes para essa tela de receitas em andamento
 function CardDrinkInProgress() {
   const { drinks } = useSelector((state) => state.drinks);
@@ -25,6 +27,15 @@ function CardDrinkInProgress() {
     fetchDrink();
   }, [dispatch, location.pathname]);
 
+  const handleShareClick = ({ target }) => {
+    const path = location.pathname;
+    const newPath = path.includes('/in-progress')
+      ? path.split('/in-progress').shift()
+      : path;
+    target.innerHTML = 'Link copied!';
+    copy(`http://localhost:3000${newPath}`);
+  };
+
   const listDrinkInProgress = () => {
     const listInProgress = drinks.map((drink) => (
       <div
@@ -43,6 +54,7 @@ function CardDrinkInProgress() {
         <button
           data-testid="share-btn"
           type="button"
+          onClick={ (e) => handleShareClick(e) }
         >
           Share
         </button>

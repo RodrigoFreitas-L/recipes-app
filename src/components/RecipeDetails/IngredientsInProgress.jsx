@@ -1,12 +1,8 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function Ingredients({ recipe, storageName }) {
-  const history = useHistory();
   const storage = localStorage.getItem(storageName);
-  // const [] = useState(false);
-  // const [isChecked, setIsChecked] = useState([]);
 
   const handleCheckBoxIngredient = ({ target }, result) => {
     // console.log(target.nextElementSibling.innerHTML);

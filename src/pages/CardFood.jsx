@@ -9,9 +9,13 @@ import BoxRecomendation from '../components/RecipeDetails/BoxRecomendation';
 
 import { setFoods } from '../redux/reducers/foodsSlice';
 import { setDrinks } from '../redux/reducers/drinksSlice';
+import { setFavoriteFoods } from '../redux/reducers/favoriteFoodsSlice';
+
+const copy = require('clipboard-copy');
 
 function CardFood() {
   const history = useHistory();
+  const { location } = useHistory();
   const dispatch = useDispatch();
   const { foods } = useSelector((state) => state.foods);
   const { drinks } = useSelector((state) => state.drinks);
@@ -42,11 +46,20 @@ function CardFood() {
   }, [history.location, loading, dispatch]);
 
   const handleClickToInProgress = async (idMeal) => {
-    // const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`;
-    // const response = await fetch(url);
-    // const data = await response.json();
-    // dispatch(setFoods(data.meals));
     history.push(`/foods/${idMeal}/in-progress`);
+  };
+
+  const handleShareClick = ({ target }) => {
+    const path = location.pathname;
+    const newPath = path.includes('/in-progress')
+      ? path.split('/in-progress').shift()
+      : path;
+    target.innerHTML = 'Link copied!';
+    copy(`http://localhost:3000${newPath}`);
+  };
+
+  const handleFavoriteClick = (favFood) => {
+    dispatch(setFavoriteFoods(favFood));
   };
 
   const renderRecipeDetails = () => {
@@ -60,8 +73,21 @@ function CardFood() {
             alt={ food.strMeal }
           />
           <p data-testid="recipe-title">{ food.strMeal }</p>
-          <button type="button" data-testid="share-btn">Share</button>
-          <button type="button" data-testid="favorite-btn">Favorite</button>
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ (e) => handleShareClick(e) }
+          >
+            Share
+          </button>
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            onClick={ () => handleFavoriteClick(foods) }
+          >
+            Favorite
+
+          </button>
           <p data-testid="recipe-category">{ food.strCategory }</p>
           <Ingredients recipe={ food } />
           <Video url={ food.strYoutube } />
