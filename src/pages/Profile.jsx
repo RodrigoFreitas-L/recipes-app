@@ -5,7 +5,12 @@ import Footer from '../components/Footer';
 import '../styles/Profile.css';
 
 function Profile() {
-  const { email } = JSON.parse(localStorage.getItem('user'));
+  const getEmail = () => {
+    const getEmailStorage = JSON.parse(localStorage.getItem('user'));
+    if (!getEmailStorage) {
+      return 'exemple@exemple.com';
+    } return getEmailStorage.user;
+  };
   return (
     <div className="content">
       <Header title="Profile" />
@@ -14,7 +19,7 @@ function Profile() {
           className="userEmail"
           data-testid="profile-email" // TO DO
         >
-          { email }
+          { getEmail() }
         </div>
         <Link
           data-testid="profile-done-btn"
