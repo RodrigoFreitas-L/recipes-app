@@ -11,5 +11,6 @@
 }
 
 .footer-container img {
-  height: 6vh;
+  height: 30px;
+  min-height: 30px;
 }

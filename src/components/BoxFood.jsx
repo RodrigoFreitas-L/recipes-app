@@ -77,6 +77,7 @@ function BoxFood() {
         type="button"
         key={ index }
         onClick={ () => filterByCategory(strCategory) }
+        className={ categoryToggle.category === strCategory && 'category-checked' }
       >
         {strCategory}
       </button>

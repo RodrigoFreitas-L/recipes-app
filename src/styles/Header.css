@@ -17,9 +17,14 @@
 }
 
 .header-page-title {
-  font-size: 0.8rem;
-  line-height: 1.3rem;
+  max-width: 200px;
   text-align: center;
+}
+
+.header-page-title h1 {
+  font-size: 1.6rem;
+  line-height: 1.3rem;
+  margin-top: 5px;
 }
 
 .search-bar button {
