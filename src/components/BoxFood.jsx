@@ -43,11 +43,9 @@ function BoxFood() {
   }, [categoryToggle]);
 
   const filterByCategory = (category) => {
-    if (categoryToggle.category === (category)) {
-      if (categoryToggle.status) {
-        setRenderedFoods(initialFoods);
-        setCategoryToggle({ status: false, category: '' });
-      }
+    if (categoryToggle.category === category && categoryToggle.status) {
+      setRenderedFoods(initialFoods);
+      setCategoryToggle({ status: false, category: '' });
     } else {
       setCategoryToggle({ status: true, category });
       setRenderedFoods(initialFoods
@@ -89,25 +87,23 @@ function BoxFood() {
 
   const renderFoods = () => {
     const MAX_LIST_NUMBER = 12;
-    if (foods !== null) {
-      if (foods.length > 0) {
-        const listFoods = foods.map(({ idMeal, strMeal, strMealThumb }, index) => (
-          <BoxFoodCard
-            key={ index }
-            meal={ { index, idMeal, strMeal, strMealThumb } }
-          />
-        ));
-        return listFoods.slice(0, MAX_LIST_NUMBER);
-      }
-      const listFoodsInitial = renderedFoods
-        .map(({ idMeal, strMeal, strMealThumb }, index) => (
-          <BoxFoodCard
-            meal={ { index, idMeal, strMeal, strMealThumb } }
-            key={ index }
-          />
-        ));
-      return listFoodsInitial.slice(0, MAX_LIST_NUMBER);
+    if (foods !== null && foods.length > 0) {
+      const listFoods = foods.map(({ idMeal, strMeal, strMealThumb }, index) => (
+        <BoxFoodCard
+          key={ index }
+          meal={ { index, idMeal, strMeal, strMealThumb } }
+        />
+      ));
+      return listFoods.slice(0, MAX_LIST_NUMBER);
     }
+    const listFoodsInitial = renderedFoods
+      .map(({ idMeal, strMeal, strMealThumb }, index) => (
+        <BoxFoodCard
+          meal={ { index, idMeal, strMeal, strMealThumb } }
+          key={ index }
+        />
+      ));
+    return listFoodsInitial.slice(0, MAX_LIST_NUMBER);
   };
 
   return (

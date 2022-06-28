@@ -5,7 +5,6 @@ function Ingredients({ recipe, storageName }) {
   const storage = localStorage.getItem(storageName);
 
   const handleCheckBoxIngredient = ({ target }, result) => {
-    // console.log(target.nextElementSibling.innerHTML);
     if (target.checked) {
       const getIngredient = JSON.parse(localStorage.getItem(storageName));
       const newIngredient = [...getIngredient, result];
@@ -73,7 +72,7 @@ function Ingredients({ recipe, storageName }) {
 
   return (
     <ul>
-      { recipe !== undefined && renderIngredients() }
+      {recipe !== undefined && renderIngredients()}
     </ul>
   );
 }
