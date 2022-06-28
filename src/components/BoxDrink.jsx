@@ -43,11 +43,9 @@ function BoxDrink() {
   }, [categoryToggle]);
 
   const filterByCategory = (category) => {
-    if (categoryToggle.category === (category)) {
-      if (categoryToggle.status) {
-        setRenderedDrinks(initialDrinks);
-        setCategoryToggle({ status: false, category: '' });
-      }
+    if (categoryToggle.category === category && categoryToggle.status) {
+      setRenderedDrinks(initialDrinks);
+      setCategoryToggle({ status: false, category: '' });
     } else {
       setCategoryToggle({ status: true, category });
       setRenderedDrinks(initialDrinks
@@ -89,25 +87,23 @@ function BoxDrink() {
 
   const renderDrinks = () => {
     const MAX_LIST_NUMBER = 12;
-    if (drinks !== null) {
-      if (drinks.length > 0) {
-        const listDrinks = drinks.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
-          <BoxDrinkCard
-            key={ index }
-            drink={ { index, idDrink, strDrink, strDrinkThumb } }
-          />
-        ));
-        return listDrinks.slice(0, MAX_LIST_NUMBER);
-      }
-      const listDrinksInitial = renderedDrinks
-        .map(({ idDrink, strDrink, strDrinkThumb }, index) => (
-          <BoxDrinkCard
-            drink={ { index, idDrink, strDrink, strDrinkThumb } }
-            key={ index }
-          />
-        ));
-      return listDrinksInitial.slice(0, MAX_LIST_NUMBER);
+    if (drinks !== null && drinks.length > 0) {
+      const listDrinks = drinks.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
+        <BoxDrinkCard
+          key={ index }
+          drink={ { index, idDrink, strDrink, strDrinkThumb } }
+        />
+      ));
+      return listDrinks.slice(0, MAX_LIST_NUMBER);
     }
+    const listDrinksInitial = renderedDrinks
+      .map(({ idDrink, strDrink, strDrinkThumb }, index) => (
+        <BoxDrinkCard
+          drink={ { index, idDrink, strDrink, strDrinkThumb } }
+          key={ index }
+        />
+      ));
+    return listDrinksInitial.slice(0, MAX_LIST_NUMBER);
   };
 
   return (

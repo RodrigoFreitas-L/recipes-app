@@ -1,15 +1,10 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function Ingredients({ recipe, storageName }) {
-  const history = useHistory();
   const storage = localStorage.getItem(storageName);
-  // const [] = useState(false);
-  // const [isChecked, setIsChecked] = useState([]);
 
   const handleCheckBoxIngredient = ({ target }, result) => {
-    // console.log(target.nextElementSibling.innerHTML);
     if (target.checked) {
       const getIngredient = JSON.parse(localStorage.getItem(storageName));
       const newIngredient = [...getIngredient, result];
@@ -77,7 +72,7 @@ function Ingredients({ recipe, storageName }) {
 
   return (
     <ul>
-      { recipe !== undefined && renderIngredients() }
+      {recipe !== undefined && renderIngredients()}
     </ul>
   );
 }
