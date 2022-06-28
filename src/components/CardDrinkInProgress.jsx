@@ -109,17 +109,14 @@ function CardDrinkInProgress() {
         >
           Share
         </button>
-        <button
-          type="button"
+        <input
+          type="image"
+          data-testid="favorite-btn"
           onClick={ () => handleFavoriteClick(drinks) }
-        >
-          <img
-            data-testid="favorite-btn"
-            src={ heart ? blackHeartIcon : whiteHeartIcon }
-            alt="favorite"
-          />
-          Favorite
-        </button>
+          src={ heart ? blackHeartIcon : whiteHeartIcon }
+          alt="favorite"
+        />
+        Favorite
         <p
           data-testid="recipe-category"
         >
