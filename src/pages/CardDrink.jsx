@@ -58,10 +58,10 @@ function CardDrink() {
     };
 
     const isFav = () => {
-      const getFoodId = location.pathname.split('/')[2];
-      if (getStorage?.find((item) => (item.id === getFoodId))) {
+      const getDrinkId = location.pathname.split('/')[2];
+      if (getStorage?.find((item) => (item.id === getDrinkId))) {
         setHeart(true);
-      } else if (getStorage && !getStorage.find((item) => (item.id === getFoodId))) {
+      } else if (getStorage && !getStorage.find((item) => (item.id === getDrinkId))) {
         setHeart(false);
       }
     };
