@@ -8,7 +8,9 @@ import BoxRecomendation from '../components/RecipeDetails/BoxRecomendation';
 
 import { setDrinks } from '../redux/reducers/drinksSlice';
 import { setFoods } from '../redux/reducers/foodsSlice';
-import { setFavoriteDrinks } from '../redux/reducers/favoriteDrinksSlice';
+
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
@@ -18,6 +20,8 @@ function CardDrink() {
   const { foods } = useSelector((state) => state.foods);
   const { location, push } = useHistory();
   const [loading, setLoading] = useState(true);
+  const [heart, setHeart] = useState(false);
+  const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   useEffect(() => {
     // Pegando o ID da URL
@@ -40,7 +44,31 @@ function CardDrink() {
       fetchFoods();
       setLoading(false);
     };
+
+    const createStorage = () => {
+      if (!localStorage.getItem('savedFoodsIngredients')) {
+        localStorage.setItem('savedFoodsIngredients', JSON.stringify([]));
+      }
+      if (!localStorage.getItem('savedDrinksIngredients')) {
+        localStorage.setItem('savedDrinksIngredients', JSON.stringify([]));
+      }
+      if (!localStorage.getItem('favoriteRecipes')) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+      }
+    };
+
+    const isFav = () => {
+      const getFoodId = location.pathname.split('/')[2];
+      if (getStorage?.find((item) => (item.id === getFoodId))) {
+        setHeart(true);
+      } else if (getStorage && !getStorage.find((item) => (item.id === getFoodId))) {
+        setHeart(false);
+      }
+    };
+
     fetchDrinks();
+    createStorage();
+    isFav();
   }, [location, loading, dispatch]);
 
   const handleShareClick = ({ target }) => {
@@ -57,9 +85,28 @@ function CardDrink() {
   const handleClickToInProgress = async (idDrink) => {
     push(`/drinks/${idDrink}/in-progress`);
   };
-
   const handleFavoriteClick = (favDrink) => {
-    dispatch(setFavoriteDrinks(favDrink));
+    const favDrinkArray = favDrink[0];
+    if (heart === false
+      && !getStorage.find((item) => item.id === favDrinkArray.idDrink)) {
+      const settingFavFood = {
+        id: favDrinkArray.idDrink,
+        type: 'drink',
+        nationality: '',
+        category: favDrinkArray.strCategory,
+        alcoholicOrNot: favDrinkArray.strAlcoholic,
+        name: favDrinkArray.strDrink,
+        image: favDrinkArray.strDrinkThumb,
+      };
+      const newStorage = [...getStorage, settingFavFood];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newStorage));
+      setHeart(true);
+    } else {
+      const index = getStorage.indexOf(favDrinkArray.idDrink);
+      getStorage.splice(index, 1);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(getStorage));
+      setHeart(false);
+    }
   };
 
   const renderRecipeDetails = () => {
@@ -81,14 +128,15 @@ function CardDrink() {
             Share
 
           </button>
-          <button
-            type="button"
+          <input
+            type="image"
             data-testid="favorite-btn"
             onClick={ () => handleFavoriteClick(drinks) }
-          >
-            Favorite
+            src={ heart ? blackHeartIcon : whiteHeartIcon }
+            alt="favorite"
+          />
+          Favorite
 
-          </button>
           <p data-testid="recipe-category">{ drink.strAlcoholic }</p>
           <Ingredients recipe={ drink } />
           <p data-testid="instructions">{ drink.strInstructions }</p>

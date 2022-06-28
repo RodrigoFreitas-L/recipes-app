@@ -27,6 +27,18 @@ function CardFoodInProgress() {
       setLoading(false);
     };
 
+    const createStorage = () => {
+      if (!localStorage.getItem('savedFoodsIngredients')) {
+        localStorage.setItem('savedFoodsIngredients', JSON.stringify([]));
+      }
+      if (!localStorage.getItem('savedDrinksIngredients')) {
+        localStorage.setItem('savedDrinksIngredients', JSON.stringify([]));
+      }
+      if (!localStorage.getItem('favoriteRecipes')) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+      }
+    };
+
     const isFav = () => {
       const getFoodId = location.pathname.split('/')[2];
       if (getStorage?.find((item) => (item.id === getFoodId))) {
@@ -37,8 +49,9 @@ function CardFoodInProgress() {
     };
 
     fetchFoods();
+    createStorage();
     isFav();
-  }, [dispatch, getStorage, heart, location.pathname]);
+  }, [dispatch, location.pathname]);
 
   const handleShareClick = ({ target }) => {
     const path = location.pathname;
