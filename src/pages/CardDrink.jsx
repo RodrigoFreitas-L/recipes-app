@@ -8,6 +8,9 @@ import BoxRecomendation from '../components/RecipeDetails/BoxRecomendation';
 
 import { setDrinks } from '../redux/reducers/drinksSlice';
 import { setFoods } from '../redux/reducers/foodsSlice';
+import { setFavoriteDrinks } from '../redux/reducers/favoriteDrinksSlice';
+
+const copy = require('clipboard-copy');
 
 function CardDrink() {
   const dispatch = useDispatch();
@@ -40,8 +43,23 @@ function CardDrink() {
     fetchDrinks();
   }, [location, loading, dispatch]);
 
+  const handleShareClick = ({ target }) => {
+    const path = location.pathname;
+    const newPath = path.includes('/in-progress')
+      ? path.split('/in-progress').shift()
+      : path;
+    target.innerHTML = 'Link copied!';
+    copy(`http://localhost:3000${newPath}`);
+  };
+
+  // foto, nome, categoria, nacionalidade, botão de compartilhar e unfav
+
   const handleClickToInProgress = async (idDrink) => {
     push(`/drinks/${idDrink}/in-progress`);
+  };
+
+  const handleFavoriteClick = (favDrink) => {
+    dispatch(setFavoriteDrinks(favDrink));
   };
 
   const renderRecipeDetails = () => {
@@ -55,8 +73,22 @@ function CardDrink() {
             alt={ drink.strDrink }
           />
           <p data-testid="recipe-title">{ drink.strDrink }</p>
-          <button type="button" data-testid="share-btn">Share</button>
-          <button type="button" data-testid="favorite-btn">Favorite</button>
+          <button
+            type="button"
+            data-testid="share-btn"
+            onClick={ (e) => handleShareClick(e) }
+          >
+            Share
+
+          </button>
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            onClick={ () => handleFavoriteClick(drinks) }
+          >
+            Favorite
+
+          </button>
           <p data-testid="recipe-category">{ drink.strAlcoholic }</p>
           <Ingredients recipe={ drink } />
           <p data-testid="instructions">{ drink.strInstructions }</p>

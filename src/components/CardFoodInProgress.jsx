@@ -3,13 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setFoods } from '../redux/reducers/foodsSlice';
 import IngredientsInProgress from './RecipeDetails/IngredientsInProgress';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+// import { setFavoriteFoods } from '../redux/reducers/favoriteFoodsSlice';
 
+const copy = require('clipboard-copy');
 // fazer a rota da tela de detalhes para essa tela de receitas em andamento
 function CardFoodInProgress() {
   const { foods } = useSelector((state) => state.foods);
   const [loading, setLoading] = useState(true);
   const { location } = useHistory();
+  const [heart, setHeart] = useState(false);
   const dispatch = useDispatch();
+  const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -20,8 +26,52 @@ function CardFoodInProgress() {
       dispatch(setFoods(data.meals));
       setLoading(false);
     };
+
+    const isFav = () => {
+      const getFoodId = location.pathname.split('/')[2];
+      if (getStorage?.find((item) => (item.id === getFoodId))) {
+        setHeart(true);
+      } else if (getStorage && !getStorage.find((item) => (item.id === getFoodId))) {
+        setHeart(false);
+      }
+    };
+
     fetchFoods();
-  }, [dispatch, location.pathname]);
+    isFav();
+  }, [dispatch, getStorage, heart, location.pathname]);
+
+  const handleShareClick = ({ target }) => {
+    const path = location.pathname;
+    const newPath = path.includes('/in-progress')
+      ? path.split('/in-progress').shift()
+      : path;
+    target.innerHTML = 'Link copied!';
+    copy(`http://localhost:3000${newPath}`);
+  };
+
+  const handleFavoriteClick = (favFood) => {
+    // dispatch(setFavoriteFoods(favFood));
+    const favFoodArray = favFood[0];
+    if (heart === false && !getStorage.find((item) => item.id === favFoodArray.idMeal)) {
+      const settingFavFood = {
+        id: favFoodArray.idMeal,
+        type: 'food',
+        nationality: favFoodArray.strArea,
+        category: favFoodArray.strCategory,
+        alcoholicOrNot: '',
+        name: favFoodArray.strMeal,
+        image: favFoodArray.strMealThumb,
+      };
+      const newStorage = [...getStorage, settingFavFood];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newStorage));
+      setHeart(true);
+    } else {
+      const index = getStorage.indexOf(favFoodArray.idMeal);
+      getStorage.splice(index, 1);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(getStorage));
+      setHeart(false);
+    }
+  };
 
   const listFoodsInProgress = () => {
     const listInProgress = foods.map((food) => (
@@ -41,15 +91,18 @@ function CardFoodInProgress() {
         <button
           data-testid="share-btn"
           type="button"
+          onClick={ (e) => handleShareClick(e) }
         >
           Share
         </button>
-        <button
+        <input
+          type="image"
           data-testid="favorite-btn"
-          type="button"
-        >
-          Favorite
-        </button>
+          onClick={ () => handleFavoriteClick(foods) }
+          src={ heart ? blackHeartIcon : whiteHeartIcon }
+          alt="favorite"
+        />
+        Favorite
         <p
           data-testid="recipe-category"
         >

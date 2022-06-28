@@ -18,8 +18,14 @@ function App() {
         localStorage.setItem('savedDrinksIngredients', JSON.stringify([]));
       }
     };
+    const initialDrinkFavStorage = () => {
+      if (!localStorage.getItem('favoriteRecipes')) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+      }
+    };
     initialDrinksStorage();
     initialFoodStorage();
+    initialDrinkFavStorage();
   }, []);
   return (
     <Routes />
