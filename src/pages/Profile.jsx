@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import '../styles/Profile.css';
 
 function Profile() {
+  const { email } = JSON.parse(localStorage.getItem('user'));
   return (
     <div className="content">
       <Header title="Profile" />
@@ -13,7 +14,7 @@ function Profile() {
           className="userEmail"
           data-testid="profile-email" // TO DO
         >
-          email@email.com
+          { email }
         </div>
         <Link
           data-testid="profile-done-btn"
@@ -33,6 +34,7 @@ function Profile() {
           data-testid="profile-logout-btn"
           to="/"
           className="contentBtns"
+          onClick={ () => localStorage.clear() }
         >
           Logout
         </Link>
