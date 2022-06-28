@@ -26,6 +26,15 @@ function Login() {
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
     localStorage.setItem('user', JSON.stringify({ email }));
+    if (!localStorage.getItem('savedFoodsIngredients')) {
+      localStorage.setItem('savedFoodsIngredients', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('savedDrinksIngredients')) {
+      localStorage.setItem('savedDrinksIngredients', JSON.stringify([]));
+    }
+    if (!localStorage.getItem('favoriteRecipes')) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    }
     history.push('/foods');
   };
 
