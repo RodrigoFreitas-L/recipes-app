@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setDrinks } from '../redux/reducers/drinksSlice';
 import IngredientsInProgress from './RecipeDetails/IngredientsInProgress';
-import blackHeart from '../images/blackHeartIcon.svg';
-import whiteHeart from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import '../styles/CardInProgress.css';
 
 const copy = require('clipboard-copy');
@@ -14,7 +14,7 @@ function CardDrinkInProgress() {
   const { drinks } = useSelector((state) => state.drinks);
   const { location } = useHistory();
   const [loading, setLoading] = useState(true);
-  const [heart, setHeart] = useState([]);
+  const [heart, setHeart] = useState(false);
   const dispatch = useDispatch();
   const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
@@ -31,9 +31,9 @@ function CardDrinkInProgress() {
     const isFav = () => {
       const getDrinkId = location.pathname.split('/')[2];
       if (getStorage?.find((item) => (item.id === getDrinkId))) {
-        setHeart(blackHeart);
-      } else {
-        setHeart(whiteHeart);
+        setHeart(true);
+      } else if (getStorage && !getStorage.find((item) => (item.id === getDrinkId))) {
+        setHeart(false);
       }
     };
 
@@ -52,22 +52,26 @@ function CardDrinkInProgress() {
 
   const handleFavoriteClick = (favDrink) => {
     const favDrinkArray = favDrink[0];
-    if (!getStorage.find((item) => item.id === favDrinkArray.idDrink)) {
+    console.log(favDrinkArray);
+    if (heart === false
+      && !getStorage.find((item) => item.id === favDrinkArray.idDrink)) {
       const settingFavFood = {
         id: favDrinkArray.idDrink,
         type: 'drink',
-        nationality: 'none',
+        nationality: '',
         category: favDrinkArray.strCategory,
-        alcoholicOrNot: favDrinkArray.Alcoholic,
-        name: favDrinkArray.strGlass,
+        alcoholicOrNot: favDrinkArray.strAlcoholic,
+        name: favDrinkArray.strDrink,
         image: favDrinkArray.strDrinkThumb,
       };
       const newStorage = [...getStorage, settingFavFood];
       localStorage.setItem('favoriteRecipes', JSON.stringify(newStorage));
+      setHeart(true);
     } else {
       const index = getStorage.indexOf(favDrinkArray.idDrink);
       getStorage.splice(index, 1);
       localStorage.setItem('favoriteRecipes', JSON.stringify(getStorage));
+      setHeart(false);
     }
   };
 
@@ -99,7 +103,7 @@ function CardDrinkInProgress() {
         >
           <img
             data-testid="favorite-btn"
-            src={ heart }
+            src={ heart ? blackHeartIcon : whiteHeartIcon }
             alt="favorite"
           />
           Favorite

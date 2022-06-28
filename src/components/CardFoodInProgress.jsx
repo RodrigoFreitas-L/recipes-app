@@ -13,7 +13,7 @@ function CardFoodInProgress() {
   const { foods } = useSelector((state) => state.foods);
   const [loading, setLoading] = useState(true);
   const { location } = useHistory();
-  const [heart, setHeart] = useState([]);
+  const [heart, setHeart] = useState(false);
   const dispatch = useDispatch();
   const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
@@ -30,11 +30,12 @@ function CardFoodInProgress() {
     const isFav = () => {
       const getFoodId = location.pathname.split('/')[2];
       if (getStorage?.find((item) => (item.id === getFoodId))) {
-        setHeart(blackHeartIcon);
-      } else {
-        setHeart(whiteHeartIcon);
+        setHeart(true);
+      } else if (getStorage && !getStorage.find((item) => (item.id === getFoodId))) {
+        setHeart(false);
       }
     };
+
     fetchFoods();
     isFav();
   }, [dispatch, getStorage, heart, location.pathname]);
@@ -51,22 +52,24 @@ function CardFoodInProgress() {
   const handleFavoriteClick = (favFood) => {
     // dispatch(setFavoriteFoods(favFood));
     const favFoodArray = favFood[0];
-    if (!getStorage.find((item) => item.id === favFoodArray.idMeal)) {
+    if (heart === false && !getStorage.find((item) => item.id === favFoodArray.idMeal)) {
       const settingFavFood = {
         id: favFoodArray.idMeal,
         type: 'food',
         nationality: favFoodArray.strArea,
         category: favFoodArray.strCategory,
-        alcoholicOrNot: 'non-alcoholic',
+        alcoholicOrNot: '',
         name: favFoodArray.strMeal,
         image: favFoodArray.strMealThumb,
       };
       const newStorage = [...getStorage, settingFavFood];
       localStorage.setItem('favoriteRecipes', JSON.stringify(newStorage));
+      setHeart(true);
     } else {
       const index = getStorage.indexOf(favFoodArray.idMeal);
       getStorage.splice(index, 1);
       localStorage.setItem('favoriteRecipes', JSON.stringify(getStorage));
+      setHeart(false);
     }
   };
 
@@ -92,17 +95,14 @@ function CardFoodInProgress() {
         >
           Share
         </button>
-        <button
-          type="button"
+        <input
+          type="image"
+          data-testid="favorite-btn"
           onClick={ () => handleFavoriteClick(foods) }
-        >
-          <img
-            data-testid="favorite-btn"
-            src={ heart }
-            alt="favorite"
-          />
-          Favorite
-        </button>
+          src={ heart ? blackHeartIcon : whiteHeartIcon }
+          alt="favorite"
+        />
+        Favorite
         <p
           data-testid="recipe-category"
         >
