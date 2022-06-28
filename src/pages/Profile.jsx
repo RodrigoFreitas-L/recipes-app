@@ -8,8 +8,8 @@ function Profile() {
   const getEmail = () => {
     const getEmailStorage = JSON.parse(localStorage.getItem('user'));
     if (!getEmailStorage) {
-      return 'exemple@exemple.com';
-    } return getEmailStorage.user;
+      return 'example@example.com';
+    } return getEmailStorage.email;
   };
   return (
     <div className="content">
