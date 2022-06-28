@@ -9,7 +9,9 @@ import BoxRecomendation from '../components/RecipeDetails/BoxRecomendation';
 
 import { setFoods } from '../redux/reducers/foodsSlice';
 import { setDrinks } from '../redux/reducers/drinksSlice';
-import { setFavoriteFoods } from '../redux/reducers/favoriteFoodsSlice';
+
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
@@ -20,11 +22,34 @@ function CardFood() {
   const { foods } = useSelector((state) => state.foods);
   const { drinks } = useSelector((state) => state.drinks);
   const [loading, setLoading] = useState(true);
+  const [heart, setHeart] = useState(false);
+  const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   useEffect(() => {
     // Pegando o ID da URL
-    const id = history.location.pathname.split('/')[2];
+    const id = location.pathname.split('/')[2];
     // Fazemdo a requisição a API pelo ID da receita
+    const createStorage = () => {
+      if (!localStorage.getItem('savedFoodsIngredients')) {
+        localStorage.setItem('savedFoodsIngredients', JSON.stringify([]));
+      }
+      if (!localStorage.getItem('savedDrinksIngredients')) {
+        localStorage.setItem('savedDrinksIngredients', JSON.stringify([]));
+      }
+      if (!localStorage.getItem('favoriteRecipes')) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+      }
+    };
+
+    const isFav = () => {
+      const getFoodId = location.pathname.split('/')[2];
+      if (getStorage?.find((item) => (item.id === getFoodId))) {
+        setHeart(true);
+      } else if (getStorage && !getStorage.find((item) => (item.id === getFoodId))) {
+        setHeart(false);
+      }
+    };
+
     const fetchDrink = async () => {
       const MAX_DRINKS_LIST = 6;
       const endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -42,8 +67,11 @@ function CardFood() {
       fetchDrink();
       setLoading(false);
     };
+
     fetchFood();
-  }, [history.location, loading, dispatch]);
+    createStorage();
+    isFav();
+  }, [loading, dispatch, location.pathname]);
 
   const handleClickToInProgress = async (idMeal) => {
     history.push(`/foods/${idMeal}/in-progress`);
@@ -59,7 +87,27 @@ function CardFood() {
   };
 
   const handleFavoriteClick = (favFood) => {
-    dispatch(setFavoriteFoods(favFood));
+    // dispatch(setFavoriteFoods(favFood));
+    const favFoodArray = favFood[0];
+    if (heart === false && !getStorage.find((item) => item.id === favFoodArray.idMeal)) {
+      const settingFavFood = {
+        id: favFoodArray.idMeal,
+        type: 'food',
+        nationality: favFoodArray.strArea,
+        category: favFoodArray.strCategory,
+        alcoholicOrNot: '',
+        name: favFoodArray.strMeal,
+        image: favFoodArray.strMealThumb,
+      };
+      const newStorage = [...getStorage, settingFavFood];
+      localStorage.setItem('favoriteRecipes', JSON.stringify(newStorage));
+      setHeart(true);
+    } else {
+      const index = getStorage.indexOf(favFoodArray.idMeal);
+      getStorage.splice(index, 1);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(getStorage));
+      setHeart(false);
+    }
   };
 
   const renderRecipeDetails = () => {
@@ -80,14 +128,14 @@ function CardFood() {
           >
             Share
           </button>
-          <button
-            type="button"
+          <input
+            type="image"
             data-testid="favorite-btn"
             onClick={ () => handleFavoriteClick(foods) }
-          >
-            Favorite
-
-          </button>
+            src={ heart ? blackHeartIcon : whiteHeartIcon }
+            alt="favorite"
+          />
+          Favorite
           <p data-testid="recipe-category">{ food.strCategory }</p>
           <Ingredients recipe={ food } />
           <Video url={ food.strYoutube } />

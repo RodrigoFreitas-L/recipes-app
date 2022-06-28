@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import Header from './Header';
+import Header from './Header';
 import BoxFoodCard from './BoxFoodCard';
 import Footer from './Footer';
 import Glass from './Glass';
@@ -72,7 +72,7 @@ function ExploreFoodsNationalities() {
 
   return (
     <>
-      {/* <Header title="Explore Nationalities" /> */}
+      <Header title="Explore Nationalities" />
       <div className="container-foods-or-drinks">
         <div className="container-categories-buttons">
           {loading ? <Glass /> : renderNationalities()}

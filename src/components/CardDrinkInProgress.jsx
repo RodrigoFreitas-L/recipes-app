@@ -28,6 +28,18 @@ function CardDrinkInProgress() {
       setLoading(false);
     };
 
+    const createStorage = () => {
+      if (!localStorage.getItem('savedFoodsIngredients')) {
+        localStorage.setItem('savedFoodsIngredients', JSON.stringify([]));
+      }
+      if (!localStorage.getItem('savedDrinksIngredients')) {
+        localStorage.setItem('savedDrinksIngredients', JSON.stringify([]));
+      }
+      if (!localStorage.getItem('favoriteRecipes')) {
+        localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+      }
+    };
+
     const isFav = () => {
       const getDrinkId = location.pathname.split('/')[2];
       if (getStorage?.find((item) => (item.id === getDrinkId))) {
@@ -38,8 +50,9 @@ function CardDrinkInProgress() {
     };
 
     fetchDrink();
+    createStorage();
     isFav();
-  }, [dispatch, getStorage, location.pathname]);
+  }, [dispatch, location.pathname]);
 
   const handleShareClick = ({ target }) => {
     const path = location.pathname;
@@ -52,7 +65,6 @@ function CardDrinkInProgress() {
 
   const handleFavoriteClick = (favDrink) => {
     const favDrinkArray = favDrink[0];
-    console.log(favDrinkArray);
     if (heart === false
       && !getStorage.find((item) => item.id === favDrinkArray.idDrink)) {
       const settingFavFood = {
@@ -97,17 +109,14 @@ function CardDrinkInProgress() {
         >
           Share
         </button>
-        <button
-          type="button"
+        <input
+          type="image"
+          data-testid="favorite-btn"
           onClick={ () => handleFavoriteClick(drinks) }
-        >
-          <img
-            data-testid="favorite-btn"
-            src={ heart ? blackHeartIcon : whiteHeartIcon }
-            alt="favorite"
-          />
-          Favorite
-        </button>
+          src={ heart ? blackHeartIcon : whiteHeartIcon }
+          alt="favorite"
+        />
+        Favorite
         <p
           data-testid="recipe-category"
         >
