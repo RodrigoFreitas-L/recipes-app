@@ -17,7 +17,7 @@ function Profile() {
       <main>
         <div
           className="userEmail"
-          data-testid="profile-email" // TO DO
+          data-testid="profile-email"
         >
           { getEmail() }
         </div>
