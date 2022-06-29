@@ -5,15 +5,33 @@
   width: 80%;
 }
 
-.container-categories-buttons button select {
+.container-categories-buttons button {
   background-color: white;
   border: 2px solid black;
   border-radius: 5px;
   cursor: pointer;
   flex-grow: 1;
+  font-size: 0.5rem;
   font-weight: 700;
   margin: 1px;
   padding: 10px;
+}
+
+.container-categories-buttons select {
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 5px;
+  font-size: 1rem;
+  height: 40px;
+  margin: 10px auto;
+  text-align: center;
+  width: 250px;
+}
+
+.container-categories-buttons .category-checked {
+  background-color: #0fa36b;
+  border: 2px solid black;
+  color: white;
 }
 
 .container-foods-or-drinks {
@@ -41,8 +59,33 @@
   text-decoration: none;
 }
 
+.meal-or-drink a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+.meal-or-drink a:active {
+  color: black;
+  text-decoration: underline;
+}
+
+.meal-or-drink a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+.meal-or-drink h1 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 .meal-or-drink img {
   border-radius: 10px;
   margin-top: 5px;
   width: 80%;
+}
+
+:hover {
+  color: black;
+  text-decoration: none;
 }
