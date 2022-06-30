@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Glass from '../components/Glass';
+import Footer from '../components/Footer';
+import '../styles/FoodsAndDrinksDetails.css';
 
 // Componentes
 import Ingredients from '../components/RecipeDetails/Ingredients';
@@ -12,6 +15,8 @@ import { setDrinks } from '../redux/reducers/drinksSlice';
 
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+
+import shareIcon from '../images/shareIcon.svg';
 
 const copy = require('clipboard-copy');
 
@@ -78,12 +83,16 @@ function CardFood() {
   };
 
   const handleShareClick = ({ target }) => {
+    const TIMEOUT = 3000;
     const path = location.pathname;
     const newPath = path.includes('/in-progress')
       ? path.split('/in-progress').shift()
       : path;
     target.innerHTML = 'Link copied!';
     copy(`http://localhost:3000${newPath}`);
+    setTimeout(() => {
+      target.innerHTML = `<img src=${shareIcon} alt="Share" /> Share`;
+    }, TIMEOUT);
   };
 
   const handleFavoriteClick = (favFood) => {
@@ -114,41 +123,56 @@ function CardFood() {
     const details = foods.map((food) => {
       const { idMeal } = food;
       return (
-        <div key={ idMeal }>
+        <div className="recipe-details" key={ idMeal }>
           <img
             data-testid="recipe-photo"
             src={ food.strMealThumb }
             alt={ food.strMeal }
           />
-          <p data-testid="recipe-title">{ food.strMeal }</p>
-          <button
-            type="button"
-            data-testid="share-btn"
-            onClick={ (e) => handleShareClick(e) }
-          >
-            Share
-          </button>
-          <input
-            type="image"
-            data-testid="favorite-btn"
-            onClick={ () => handleFavoriteClick(foods) }
-            src={ heart ? blackHeartIcon : whiteHeartIcon }
-            alt="favorite"
-          />
-          Favorite
-          <p data-testid="recipe-category">{ food.strCategory }</p>
+          <h1 data-testid="recipe-title">{food.strMeal}</h1>
+          <div className="container-share-fav">
+            <div>
+              <button
+                type="button"
+                data-testid="share-btn"
+                onClick={ (e) => handleShareClick(e) }
+              >
+                <img src={ shareIcon } alt="Share" />
+                {' '}
+                Share
+              </button>
+            </div>
+            <div>
+              <input
+                type="image"
+                data-testid="favorite-btn"
+                onClick={ () => handleFavoriteClick(foods) }
+                src={ heart ? blackHeartIcon : whiteHeartIcon }
+                alt="favorite"
+              />
+              <span>Favorite</span>
+            </div>
+          </div>
+          <hr />
+          <div className="container-category-title">
+            Category:
+            {' '}
+            <span data-testid="recipe-category">{food.strCategory}</span>
+          </div>
+          <hr />
           <Ingredients recipe={ food } />
           <Video url={ food.strYoutube } />
-          <p data-testid="instructions">{ food.strInstructions }</p>
+          <p data-testid="instructions">{food.strInstructions}</p>
           <BoxRecomendation recomendations={ drinks } />
-          <button
-            style={ { width: '25%', left: '35%', bottom: '0', position: 'fixed' } }
-            type="button"
-            data-testid="start-recipe-btn"
-            onClick={ () => handleClickToInProgress(idMeal) }
-          >
-            Start Recipe
-          </button>
+          <div className="container-start-button">
+            <button
+              data-testid="start-recipe-btn"
+              type="button"
+              onClick={ () => handleClickToInProgress(idMeal) }
+            >
+              Start Recipe
+            </button>
+          </div>
         </div>
       );
     });
@@ -156,10 +180,13 @@ function CardFood() {
   };
 
   return (
-    <div>
-      { loading && <h2>loading ...</h2> }
-      { !loading && renderRecipeDetails() }
-    </div>
+    <>
+      <div className="container-recipe-details">
+        {loading && <Glass />}
+        {!loading && renderRecipeDetails()}
+      </div>
+      <Footer />
+    </>
   );
 }
 
