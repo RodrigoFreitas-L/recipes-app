@@ -83,12 +83,16 @@ function CardFood() {
   };
 
   const handleShareClick = ({ target }) => {
+    const TIMEOUT = 3000;
     const path = location.pathname;
     const newPath = path.includes('/in-progress')
       ? path.split('/in-progress').shift()
       : path;
     target.innerHTML = 'Link copied!';
     copy(`http://localhost:3000${newPath}`);
+    setTimeout(() => {
+      target.innerHTML = `<img src=${shareIcon} alt="Share" /> Share`;
+    }, TIMEOUT);
   };
 
   const handleFavoriteClick = (favFood) => {
